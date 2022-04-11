@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gather/ui/styles/gather_text_style.dart';
 import 'package:gather/ui/styles/gather_theme.dart';
+
+import '../ui/widgets/post_card.dart';
 
 void main() {
   runApp(const MyApp());
@@ -37,19 +38,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'This is a subhead 2',
-            style: GatherTextStyle.subhead2(context),
-          ),
-          Text(
-            'This is a caption',
-            style: GatherTextStyle.caption(context),
-          ),
-          Text(
-            'This is a callout',
-            style: GatherTextStyle.callout(context),
-          ),
+        children: const [
+          PostCard(),
         ],
       ),
     );
