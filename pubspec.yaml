@@ -60,6 +60,10 @@ flutter:
   assets:
     - assets/
     - assets/dummy/post/
+    - assets/shared/icons/
+    - assets/shared/icons/2.0x/
+    - assets/shared/icons/3.0x/
+    - assets/shared/icons/4.0x/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
