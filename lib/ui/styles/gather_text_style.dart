@@ -11,6 +11,25 @@ class GatherTextStyle {
         );
   }
 
+  static TextStyle CTA3(BuildContext context) {
+    return Theme.of(context).textTheme.labelLarge!.copyWith(
+          fontSize: 15,
+          height: 1.466,
+          fontWeight: FontWeight.w600,
+          letterSpacing: 0,
+          color: Colors.white,
+        );
+  }
+
+  static TextStyle body1(BuildContext context) {
+    return Theme.of(context).textTheme.labelLarge!.copyWith(
+          fontSize: 17,
+          height: 1.29,
+          fontWeight: FontWeight.w400,
+          letterSpacing: 0,
+        );
+  }
+
   /// Use for location in PostName
   static TextStyle caption(BuildContext context) {
     return Theme.of(context).textTheme.labelSmall!.copyWith(
