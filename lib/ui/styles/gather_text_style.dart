@@ -23,6 +23,16 @@ class GatherTextStyle {
         );
   }
 
+  // static TextStyle appbarTitle(BuildContext context) {
+  //   return Theme.of(context).textTheme.labelLarge!.copyWith(
+  //     fontSize: 15,
+  //     height: 1.27,
+  //     fontWeight: FontWeight.w600,
+  //     letterSpacing: 1,
+  //     color: GatherColor.primary,
+  //   );
+  // }
+
   static TextStyle appbarTitle(BuildContext context) {
     return Theme.of(context).textTheme.labelLarge!.copyWith(
       fontSize: 22,

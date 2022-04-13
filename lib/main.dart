@@ -74,24 +74,26 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ],
             ),
-            IconButton(
-              splashRadius: 24,
-              // TODO: on press, push screen to notification center
-              onPressed: () => debugPrint('notification pressed'),
-              icon: Image.asset('assets/shared/icons/bell.png'),
-            ),
-            IconButton(
-              splashRadius: 24,
-              // iconSize: 10,
-              // TODO: on press, push screen to direct messages
-              onPressed: () => debugPrint('direct message pressed'),
-              icon: Image.asset('assets/shared/icons/message.png'),
-            ),
           ],
         ),
-        // actions: [
-        //
-        // ],
+        actions: [
+          IconButton(
+            splashRadius: 24,
+            // TODO: on press, push screen to notification center
+            onPressed: () => debugPrint('notification pressed'),
+            icon: Image.asset('assets/shared/icons/bell.png'),
+          ),
+          IconButton(
+            splashRadius: 24,
+            // iconSize: 10,
+            // TODO: on press, push screen to direct messages
+            onPressed: () => debugPrint('direct message pressed'),
+            icon: Image.asset('assets/shared/icons/message.png'),
+          ),
+          const SizedBox(
+            width: 4,
+          ),
+        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
