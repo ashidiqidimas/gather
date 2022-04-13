@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gather/ui/styles/colors/gather_color.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
@@ -19,6 +20,12 @@ class GatherTheme {
   static light() {
     return ThemeData(
       textTheme: lightTextTheme,
+      scaffoldBackgroundColor: Colors.white,
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Colors.white,
+        elevation: 1,
+        shadowColor: GatherColor.neutral
+      )
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:gather/ui/styles/colors/gather_color.dart';
+
 class GatherTextStyle {
   /// Use for postName in PostCard
   static TextStyle subhead2(BuildContext context) {
@@ -19,6 +21,16 @@ class GatherTextStyle {
           letterSpacing: 0,
           color: Colors.white,
         );
+  }
+
+  static TextStyle appbarTitle(BuildContext context) {
+    return Theme.of(context).textTheme.labelLarge!.copyWith(
+      fontSize: 22,
+      height: 1,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 2,
+      color: GatherColor.primary,
+    );
   }
 
   static TextStyle body1(BuildContext context) {
