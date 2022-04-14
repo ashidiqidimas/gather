@@ -65,7 +65,7 @@ flutter:
     - assets/shared/icons/3.0x/
     - assets/shared/icons/4.0x/
   fonts:
-    - family:
+    - family: Poppins
       fonts:
         - asset: fonts/Poppins-Regular.ttf
         - asset: fonts/Poppins-Italic.ttf

@@ -23,22 +23,22 @@ class GatherTextStyle {
         );
   }
 
-  // static TextStyle appbarTitle(BuildContext context) {
-  //   return Theme.of(context).textTheme.labelLarge!.copyWith(
-  //     fontSize: 15,
-  //     height: 1.27,
-  //     fontWeight: FontWeight.w600,
-  //     letterSpacing: 1,
-  //     color: GatherColor.primary,
-  //   );
-  // }
-
   static TextStyle appbarTitle(BuildContext context) {
     return Theme.of(context).textTheme.labelLarge!.copyWith(
       fontSize: 22,
       height: 1,
       fontWeight: FontWeight.w600,
       letterSpacing: 2,
+      color: GatherColor.primary,
+    );
+  }
+
+  static TextStyle bottomBarLabel(BuildContext context) {
+    return Theme.of(context).textTheme.labelLarge!.copyWith(
+      fontSize: 12,
+      height: 1.5,
+      fontWeight: FontWeight.w500,
+      letterSpacing: -0.24,
       color: GatherColor.primary,
     );
   }
@@ -57,7 +57,7 @@ class GatherTextStyle {
     return Theme.of(context).textTheme.labelSmall!.copyWith(
           fontSize: 13,
           height: 1.15,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w400,
           letterSpacing: 0,
         );
   }
