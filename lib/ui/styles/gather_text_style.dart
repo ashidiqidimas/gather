@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class GatherTextStyle {
   /// Use for postName in PostCard
   static TextStyle subhead2(BuildContext context) {
-    return Theme.of(context).textTheme.labelLarge!.copyWith(
+    return Theme.of(context).textTheme.titleLarge!.copyWith(
           fontSize: 17,
           height: 1.29,
           fontWeight: FontWeight.w600,

@@ -7,13 +7,13 @@ import 'colors/gather_text_color.dart';
 class GatherTheme {
   static TextTheme lightTextTheme = TextTheme(
     /// base text style for text with primary color
-    labelLarge: GoogleFonts.poppins(color: GatherTextColor.primary),
+    titleLarge: TextStyle(fontFamily: 'Poppins').copyWith(color: GatherTextColor.primary),
 
     /// base text style for text with secondary color
-    labelMedium: GoogleFonts.poppins(color: GatherTextColor.secondary),
+    labelMedium: TextStyle(fontFamily: 'Poppins').copyWith(color: GatherTextColor.secondary),
 
     /// base text style for text with tertiary color
-    labelSmall: GoogleFonts.poppins(color: GatherTextColor.tertiary),
+    labelSmall: TextStyle(fontFamily: 'Poppins').copyWith(color: GatherTextColor.tertiary),
   );
 
   static light() {
