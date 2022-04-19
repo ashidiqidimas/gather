@@ -1,50 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:gather/business_logic/managers/app_state_manager.dart';
+import 'package:gather/ui/screens/home_screen.dart';
+import 'package:provider/provider.dart';
 
-import '../ui/styles/gather_theme.dart';
-import '../ui/widgets/components/post_card.dart';
-import '../ui/widgets/shared/gather_appbar.dart';
-import '../ui/widgets/shared/gather_bottom_navigation_bar.dart';
-
+import 'ui/styles/gather_theme.dart';
+import 'business_logic/managers/all_managers.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: GatherTheme.light(),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
+  State<MyApp> createState() => _MyAppState();
 }
 
-class MyHomePage extends StatefulWidget {
-  final String title;
+class _MyAppState extends State<MyApp> {
+  final _appStateManager = AppStateManager();
 
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  // TODO: Add login state manager
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const GatherAppBar(),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          PostCard(),
-        ],
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => _appStateManager),
+      ],
+      child: MaterialApp(
+        title: '2Gather',
+        theme: GatherTheme.light(),
+        // TODO: Set home to a router
+        home: const HomeScreen(
+          currentTab: 0,
+        ),
       ),
-      bottomNavigationBar: GatherBottomNavigationBar(),
     );
   }
 }
-
