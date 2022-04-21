@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../styles/gather_text_style.dart';
+import '../styles/all_styles.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({Key? key}) : super(key: key);
@@ -11,17 +11,18 @@ class OnBoardingScreen extends StatefulWidget {
 }
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
-  late PageController controller;
+  late PageController _controller;
+  int _pageIndex = 0;
 
   @override
   void initState() {
-    controller = PageController(initialPage: 0);
+    _controller = PageController(initialPage: 0);
     super.initState();
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -34,7 +35,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             bottom: 130,
           ),
           child: PageView(
-            controller: controller,
+            onPageChanged: (index) {
+              setState(() {
+                _pageIndex = index;
+              });
+            },
+            controller: _controller,
             children: [
               buildOnBoardingPage(
                   image: 'assets/shared/images/on_boarding_img_1.png',
@@ -43,21 +49,21 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       'Invite someone to your trip, join an open trip, or travel'
                       'with complete strangers. Your will never feel lonely again.'),
               buildOnBoardingPage(
-                image: 'assets/shared/images/on_boarding_img_1.png',
+                image: 'assets/shared/images/on_boarding_img_2.png',
                 title: 'Find Hidden\nGems Near You',
                 description:
                     'See places your friends travel to or explore what is '
                     'trending near you. You will never running out of places to go.',
               ),
               buildOnBoardingPage(
-                image: 'assets/shared/images/on_boarding_img_1.png',
+                image: 'assets/shared/images/on_boarding_img_3.png',
                 title: 'Book Ticket\nEasily',
                 description:
                     'Book your ticket with one click at home, then scan your '
                     'e-ticket at the locket. Travel can’t get easier than this.',
               ),
               buildOnBoardingPage(
-                  image: 'assets/shared/images/on_boarding_img_1.png',
+                  image: 'assets/shared/images/on_boarding_img_4.png',
                   title: 'Pay Split Bills\nEasily',
                   description:
                       'We automatically calculate the bills and charge everyone for '
@@ -80,15 +86,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const SizedBox(
-            height: 40,
-          ),
+          const Spacer(),
           Image.asset(
             image,
           ),
-          const SizedBox(
-            height: 80,
-          ),
+          const Spacer(),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -106,6 +108,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               ),
             ],
           ),
+          const Spacer(),
         ],
       ),
     );
@@ -116,37 +119,74 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       padding: const EdgeInsets.only(
         right: 32,
         left: 24,
-        bottom: 29,
+        bottom: 24,
       ),
       color: Colors.white,
       height: 130,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          buildSmoothPageIndicator(),
+          Center(
+            child: buildSmoothPageIndicator(),
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              AnimatedCrossFade(
+                firstCurve: Curves.easeIn,
+                secondCurve: Curves.easeIn,
+                crossFadeState: _pageIndex == 0
+                    ? CrossFadeState.showFirst
+                    : CrossFadeState.showSecond,
+                duration: const Duration(milliseconds: 200),
+                firstChild: const SizedBox(
+                  width: 58,
+                  height: 50,
+                ),
+                secondChild: TextButton(
+                  onPressed: () => _controller.previousPage(
+                    duration: const Duration(milliseconds: 200),
+                    curve: Curves.easeIn,
+                  ),
+                  child: Text(
+                    'Back',
+                    style: GatherTextStyle.button2(context).copyWith(
+                      color: GatherColor.grey,
+                    ),
+                  ),
+                  style: TextButton.styleFrom(
+                    minimumSize: const Size(58, 50),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
   }
 
-  SmoothPageIndicator buildSmoothPageIndicator() {
+  Widget buildSmoothPageIndicator() {
     return SmoothPageIndicator(
       onDotClicked: (index) {
-        controller.animateToPage(
+        _controller.animateToPage(
           index,
           duration: const Duration(milliseconds: 200),
           curve: Curves.easeIn,
         );
       },
-      effect: const ExpandingDotsEffect(
+      effect: ExpandingDotsEffect(
         expansionFactor: 5,
         spacing: 8,
         dotHeight: 8,
         dotWidth: 8,
-        activeDotColor: Color.fromRGBO(100, 149, 243, 1),
-        dotColor: Color.fromRGBO(173, 205, 253, 1),
+        activeDotColor: GatherColor.primarySwatch[400]!,
+        dotColor: GatherColor.primarySwatch[200]!,
       ),
-      controller: controller,
+      controller: _controller,
       count: 4,
     );
   }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gather/ui/styles/colors/gather_color.dart';
 
 class GatherTextStyle {
+  /// Use for on boarding title
   static TextStyle title1(BuildContext context) {
     return Theme.of(context).textTheme.labelLarge!.copyWith(
       fontSize: 30,
@@ -16,13 +17,22 @@ class GatherTextStyle {
   static TextStyle subhead2(BuildContext context) {
     return Theme.of(context).textTheme.titleLarge!.copyWith(
           fontSize: 17,
-          height: 1.29,
+          height: 1.294,
           fontWeight: FontWeight.w600,
           letterSpacing: 0.5,
         );
   }
 
-  static TextStyle callToAction3(BuildContext context) {
+  static TextStyle button2(BuildContext context) {
+    return Theme.of(context).textTheme.labelLarge!.copyWith(
+      fontSize: 17,
+      height: 1.294,
+      fontWeight: FontWeight.w500,
+      letterSpacing: 0,
+    );
+  }
+
+  static TextStyle button3(BuildContext context) {
     return Theme.of(context).textTheme.labelLarge!.copyWith(
           fontSize: 15,
           height: 1.466,
