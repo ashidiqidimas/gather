@@ -3,6 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:gather/ui/styles/colors/gather_color.dart';
 
 class GatherTextStyle {
+  static TextStyle title1(BuildContext context) {
+    return Theme.of(context).textTheme.labelLarge!.copyWith(
+      fontSize: 30,
+      height: 1.2,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 0,
+    );
+  }
+
   /// Use for postName in PostCard
   static TextStyle subhead2(BuildContext context) {
     return Theme.of(context).textTheme.titleLarge!.copyWith(
@@ -13,7 +22,7 @@ class GatherTextStyle {
         );
   }
 
-  static TextStyle CTA3(BuildContext context) {
+  static TextStyle callToAction3(BuildContext context) {
     return Theme.of(context).textTheme.labelLarge!.copyWith(
           fontSize: 15,
           height: 1.466,
@@ -29,7 +38,7 @@ class GatherTextStyle {
       height: 1,
       fontWeight: FontWeight.w600,
       letterSpacing: 2,
-      color: GatherColor.primary,
+      color: GatherColor.primarySwatch[500],
     );
   }
 
@@ -39,7 +48,7 @@ class GatherTextStyle {
       height: 1.5,
       fontWeight: FontWeight.w500,
       letterSpacing: -0.24,
-      color: GatherColor.primary,
+      color: GatherColor.primarySwatch[500],
     );
   }
 
@@ -50,6 +59,15 @@ class GatherTextStyle {
           fontWeight: FontWeight.w400,
           letterSpacing: 0,
         );
+  }
+
+  static TextStyle body2(BuildContext context) {
+    return Theme.of(context).textTheme.labelMedium!.copyWith(
+      fontSize: 17,
+      height: 1.29,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0,
+    );
   }
 
   /// Use for location in PostName

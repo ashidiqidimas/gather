@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gather/business_logic/managers/app_state_manager.dart';
-import 'package:gather/ui/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'ui/styles/gather_theme.dart';
 import 'business_logic/managers/all_managers.dart';
+import 'ui/screens/on_boarding_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,9 +31,7 @@ class _MyAppState extends State<MyApp> {
         title: '2Gather',
         theme: GatherTheme.light(),
         // TODO: Set home to a router
-        home: const HomeScreen(
-          currentTab: 0,
-        ),
+        home: const OnBoardingScreen(),
       ),
     );
   }
