@@ -20,6 +20,7 @@ class GatherTheme {
 
   static light() {
     return ThemeData(
+      colorSchemeSeed: const Color(0xFF2369F6),
       fontFamily: ('Poppins'),
       textTheme: lightTextTheme,
       scaffoldBackgroundColor: Colors.white,

@@ -1,4 +1,6 @@
+// Test
 import 'package:flutter/material.dart';
+import 'package:gather/ui/widgets/components/on_boarding_button.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../styles/all_styles.dart';
@@ -10,20 +12,47 @@ class OnBoardingScreen extends StatefulWidget {
   State<OnBoardingScreen> createState() => _OnBoardingScreenState();
 }
 
-class _OnBoardingScreenState extends State<OnBoardingScreen> {
+class _OnBoardingScreenState extends State<OnBoardingScreen>
+    with TickerProviderStateMixin {
   late PageController _controller;
+  late AnimationController _animationController;
   int _pageIndex = 0;
 
   @override
   void initState() {
     _controller = PageController(initialPage: 0);
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(
+        milliseconds: 200,
+      ),
+    );
     super.initState();
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _animationController.dispose();
     super.dispose();
+  }
+
+  Future<void> _playForward() async {
+    try {
+      await _animationController.forward().orCancel.whenComplete(() {
+        // TODO
+      });
+    } on TickerCanceled {
+      debugPrint('Forward animation canceled');
+    }
+  }
+
+  Future<void> _playBackward() async {
+    try {
+      await _animationController.reverse().orCancel;
+    } on TickerCanceled {
+      debugPrint('Forward animation canceled');
+    }
   }
 
   @override
@@ -31,14 +60,18 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.only(
-            bottom: 130,
-          ),
+          padding: const EdgeInsets.only(bottom: 154),
           child: PageView(
             onPageChanged: (index) {
               setState(() {
                 _pageIndex = index;
               });
+
+              if (_pageIndex == 3) {
+                _playForward();
+              } else if (_pageIndex == 2) {
+                _playBackward();
+              }
             },
             controller: _controller,
             children: [
@@ -46,7 +79,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   image: 'assets/shared/images/on_boarding_img_1.png',
                   title: 'Find Friends\nfor Travel',
                   description:
-                      'Invite someone to your trip, join an open trip, or travel'
+                      'Invite someone to your trip, join an open trip, or travel '
                       'with complete strangers. Your will never feel lonely again.'),
               buildOnBoardingPage(
                 image: 'assets/shared/images/on_boarding_img_2.png',
@@ -116,15 +149,15 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
   Widget buildBottomSheet() {
     return Container(
+      color: Colors.white,
       padding: const EdgeInsets.only(
         right: 32,
         left: 24,
-        bottom: 24,
+        bottom: 48,
       ),
-      color: Colors.white,
-      height: 130,
+      height: 154,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Center(
             child: buildSmoothPageIndicator(),
@@ -134,37 +167,82 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              AnimatedCrossFade(
-                firstCurve: Curves.easeIn,
-                secondCurve: Curves.easeIn,
-                crossFadeState: _pageIndex == 0
-                    ? CrossFadeState.showFirst
-                    : CrossFadeState.showSecond,
-                duration: const Duration(milliseconds: 200),
-                firstChild: const SizedBox(
-                  width: 58,
-                  height: 50,
-                ),
-                secondChild: TextButton(
-                  onPressed: () => _controller.previousPage(
-                    duration: const Duration(milliseconds: 200),
-                    curve: Curves.easeIn,
+              buildLeftButton(),
+              Row(
+                children: [
+                  // AnimatedCrossFade(
+                  //   crossFadeState: _pageIndex != 3
+                  //       ? CrossFadeState.showFirst
+                  //       : CrossFadeState.showSecond,
+                  //   duration: const Duration(milliseconds: 200),
+                  //   firstChild:
+                  //   secondChild: const SizedBox(
+                  //     width: 53,
+                  //     height: 50,
+                  //   ),
+                  // ),
+                  _pageIndex != 3
+                      ? TextButton(
+                          onPressed: () => debugPrint('Skip button not implemented'),
+                          child: Text(
+                            'Skip',
+                            style: GatherTextStyle.headline(context).copyWith(
+                              color: GatherColor.primarySwatch[500]!,
+                            ),
+                          ),
+                          style: TextButton.styleFrom(
+                            minimumSize: const Size(53, 50),
+                          ),
+                        )
+                      : const SizedBox(
+                          width: 53,
+                          height: 50,
+                        ),
+                  const SizedBox(
+                    width: 16,
                   ),
-                  child: Text(
-                    'Back',
-                    style: GatherTextStyle.button2(context).copyWith(
-                      color: GatherColor.grey,
-                    ),
-                  ),
-                  style: TextButton.styleFrom(
-                    minimumSize: const Size(58, 50),
-                  ),
-                ),
-              ),
+                  OnBoardingButton(
+                    controller: _controller,
+                    pageIndex: _pageIndex,
+                    animationController: _animationController,
+                  )
+                ],
+              )
             ],
           ),
         ],
+      ),
+    );
+  }
+
+  Widget buildLeftButton() {
+    return AnimatedCrossFade(
+      firstCurve: Curves.easeIn,
+      secondCurve: Curves.easeIn,
+      crossFadeState: _pageIndex == 0
+          ? CrossFadeState.showFirst
+          : CrossFadeState.showSecond,
+      duration: const Duration(milliseconds: 200),
+      firstChild: const SizedBox(
+        width: 58,
+        height: 50,
+      ),
+      secondChild: TextButton(
+        onPressed: () => _controller.previousPage(
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeIn,
+        ),
+        child: Text(
+          'Back',
+          style: GatherTextStyle.button1(context).copyWith(
+            color: GatherColor.grey,
+          ),
+        ),
+        style: TextButton.styleFrom(
+          minimumSize: const Size(58, 50),
+        ),
       ),
     );
   }
@@ -183,11 +261,16 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         spacing: 8,
         dotHeight: 8,
         dotWidth: 8,
-        activeDotColor: GatherColor.primarySwatch[400]!,
+        activeDotColor: GatherColor.primarySwatch[300]!,
         dotColor: GatherColor.primarySwatch[200]!,
       ),
       controller: _controller,
       count: 4,
     );
   }
+}
+
+enum AnimatedProperties {
+  width,
+  backgroundColor,
 }

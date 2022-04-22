@@ -153,7 +153,7 @@ Widget buildCardFooter(BuildContext context) {
         onPressed: () => debugPrint('See package pressed'),
         child: Text(
           'See Package',
-          style: GatherTextStyle.button3(context),
+          style: GatherTextStyle.button2(context),
         ),
         style: ButtonStyle(
           foregroundColor: MaterialStateProperty.all(Colors.white),

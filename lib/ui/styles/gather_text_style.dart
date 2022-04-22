@@ -23,7 +23,16 @@ class GatherTextStyle {
         );
   }
 
-  static TextStyle button2(BuildContext context) {
+  static TextStyle headline(BuildContext context) {
+    return Theme.of(context).textTheme.labelLarge!.copyWith(
+      fontSize: 17,
+      height: 1.294,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 0,
+    );
+  }
+
+  static TextStyle button1(BuildContext context) {
     return Theme.of(context).textTheme.labelLarge!.copyWith(
       fontSize: 17,
       height: 1.294,
@@ -32,7 +41,7 @@ class GatherTextStyle {
     );
   }
 
-  static TextStyle button3(BuildContext context) {
+  static TextStyle button2(BuildContext context) {
     return Theme.of(context).textTheme.labelLarge!.copyWith(
           fontSize: 15,
           height: 1.466,
