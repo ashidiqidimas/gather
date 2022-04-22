@@ -24,7 +24,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(
-        milliseconds: 200,
+        milliseconds: 400,
       ),
     );
     super.initState();
@@ -65,13 +65,15 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
             onPageChanged: (index) {
               setState(() {
                 _pageIndex = index;
+                if (_pageIndex == 3) {
+                  _playForward();
+                }
+                else if (_pageIndex == 2) {
+                  _playBackward();
+                }
               });
 
-              if (_pageIndex == 3) {
-                _playForward();
-              } else if (_pageIndex == 2) {
-                _playBackward();
-              }
+
             },
             controller: _controller,
             children: [
@@ -219,21 +221,29 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
 
   Widget buildLeftButton() {
     return AnimatedCrossFade(
-      firstCurve: Curves.easeIn,
-      secondCurve: Curves.easeIn,
+      firstCurve: Curves.easeOut,
+      secondCurve: Curves.easeOut,
       crossFadeState: _pageIndex == 0
           ? CrossFadeState.showFirst
           : CrossFadeState.showSecond,
-      duration: const Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 400),
       firstChild: const SizedBox(
         width: 58,
         height: 50,
       ),
       secondChild: TextButton(
-        onPressed: () => _controller.previousPage(
-          duration: const Duration(milliseconds: 200),
-          curve: Curves.easeIn,
-        ),
+        onPressed: () {
+          setState(() {
+            _pageIndex--;
+            if (_pageIndex == 2) {
+              _playBackward();
+            }
+          });
+          _controller.previousPage(
+          duration: const Duration(milliseconds: 350),
+          curve: Curves.easeOut,
+        );
+        },
         child: Text(
           'Back',
           style: GatherTextStyle.button1(context).copyWith(
@@ -253,7 +263,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
         _controller.animateToPage(
           index,
           duration: const Duration(milliseconds: 200),
-          curve: Curves.easeIn,
+          curve: Curves.easeOut,
         );
       },
       effect: ExpandingDotsEffect(

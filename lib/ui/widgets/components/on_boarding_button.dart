@@ -10,30 +10,21 @@ class OnBoardingButton extends StatelessWidget {
   final Animation<Color?> backgroundColorAnimation;
   final Animation<double> width;
 
-  // backgroundColorAnimation = ColorTween(
-  // begin: Colors.red,
-  // end: Colors.yellow,
-  // ).animate(
-  // CurvedAnimation(
-  // parent: animationController,
-  // curve: Curves.easeIn,
-  // );
-
   OnBoardingButton({
     Key? key,
     required this.animationController,
     required this.controller,
     required this.pageIndex,
   })  : backgroundColorAnimation = ColorTween(
-          begin: Colors.green,
-          end: Colors.red,
+          begin: GatherColor.primarySwatch[100]!,
+          end: GatherColor.primarySwatch[500]!,
         ).animate(
           CurvedAnimation(
             parent: animationController,
             curve: const Interval(
               0.0,
-              0.2,
-              curve: Curves.easeIn,
+              0.40,
+              curve: Curves.easeOut,
             ),
           ),
         ),
@@ -45,8 +36,8 @@ class OnBoardingButton extends StatelessWidget {
             parent: animationController,
             curve: const Interval(
               0.0,
-              0.2,
-              curve: Curves.easeIn,
+              0.40,
+              curve: Curves.easeOut,
             ),
           ),
         ),
@@ -54,12 +45,18 @@ class OnBoardingButton extends StatelessWidget {
 
   Widget _buildAnimation(BuildContext context, Widget? child) {
     return ElevatedButton(
-      onPressed: () => controller.nextPage(
-        duration: const Duration(
-          milliseconds: 200,
-        ),
-        curve: Curves.easeIn,
-      ),
+      onPressed: () {
+        if (pageIndex != 3) {
+          controller.nextPage(
+            duration: const Duration(
+              milliseconds: 400,
+            ),
+            curve: Curves.easeOut,
+          );
+        } else {
+          // TODO: Implement sign up button
+        }
+      },
       child: Text(
         pageIndex != 3 ? 'Next' : 'Get Started',
         style: GatherTextStyle.headline(context).copyWith(
@@ -77,9 +74,10 @@ class OnBoardingButton extends StatelessWidget {
           return 0;
         }),
         overlayColor: MaterialStateProperty.all(
-          // GatherColor.primarySwatch[300]!,
-          Colors.transparent,
-        ),
+            // GatherColor.primarySwatch[300]!,
+            pageIndex != 2
+                ? GatherColor.primarySwatch[300]!
+                : Colors.transparent),
         backgroundColor: MaterialStateProperty.resolveWith(
           (states) => backgroundColorAnimation.value,
         ),
