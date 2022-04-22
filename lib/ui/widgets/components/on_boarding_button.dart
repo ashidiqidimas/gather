@@ -8,6 +8,7 @@ class OnBoardingButton extends StatelessWidget {
 
   final Animation<double> animationController;
   final Animation<Color?> backgroundColorAnimation;
+  final Animation<Color?> textColorAnimation;
   final Animation<double> width;
 
   OnBoardingButton({
@@ -28,9 +29,22 @@ class OnBoardingButton extends StatelessWidget {
             ),
           ),
         ),
+        textColorAnimation = ColorTween(
+          begin: GatherColor.primarySwatch[500]!,
+          end: Colors.white,
+        ).animate(
+          CurvedAnimation(
+            parent: animationController,
+            curve: const Interval(
+              0.0,
+              0.40,
+              curve: Curves.easeOut,
+            ),
+          ),
+        ),
         width = Tween<double>(
           begin: 95,
-          end: 155,
+          end: 156,
         ).animate(
           CurvedAnimation(
             parent: animationController,
@@ -60,7 +74,7 @@ class OnBoardingButton extends StatelessWidget {
       child: Text(
         pageIndex != 3 ? 'Next' : 'Get Started',
         style: GatherTextStyle.headline(context).copyWith(
-          color: GatherColor.primarySwatch[500]!,
+          color: textColorAnimation.value,
         ),
       ),
       style: ButtonStyle(
