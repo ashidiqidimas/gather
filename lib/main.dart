@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'ui/styles/gather_theme.dart';
 import 'business_logic/managers/all_managers.dart';
-import 'ui/screens/on_boarding_screen.dart';
+import 'business_logic/navigation/app_router.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,20 +18,42 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final _appStateManager = AppStateManager();
+  final _profileManager = ProfileManager();
+  final _signUpManager = SignUpManager();
+  final _signInManager = SignInManager();
 
-  // TODO: Add login state manager
+  late AppRouter _appRouter;
+
+  @override
+  void initState() {
+    _appRouter = AppRouter(
+      appStateManager: _appStateManager,
+      profileManager: _profileManager,
+      signUpManager: _signUpManager,
+      signInManager: _signInManager,
+    );
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => _appStateManager),
+        ChangeNotifierProvider(create: (context) => _signUpManager),
+        ChangeNotifierProvider(create: (context) => _signInManager),
+        ChangeNotifierProvider(create: (context) => _profileManager),
       ],
+      // If want to implement dark mode, wrap [MaterialApp] in Consumer<ProfileManager>
       child: MaterialApp(
         title: '2Gather',
         theme: GatherTheme.light(),
         // TODO: Set home to a router
-        home: const OnBoardingScreen(),
+        home: Router(
+          routerDelegate: _appRouter,
+          // TODO: Add backButtonDispatcher
+        ),
       ),
     );
   }

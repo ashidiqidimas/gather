@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../../business_logic/managers/all_managers.dart';
 import '../../styles/all_styles.dart';
 
 class OnBoardingButton extends StatelessWidget {
@@ -68,6 +70,8 @@ class OnBoardingButton extends StatelessWidget {
             curve: Curves.easeOut,
           );
         } else {
+          debugPrint('get started pressed');
+          Provider.of<AppStateManager>(context, listen: false).completeOnBoarding();
           // TODO: Implement sign up button
         }
       },

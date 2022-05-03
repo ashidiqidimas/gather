@@ -3,10 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:gather/ui/widgets/components/on_boarding_button.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../business_logic/constants/all_constants.dart';
 import '../styles/all_styles.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({Key? key}) : super(key: key);
+
+  static MaterialPage page() {
+    return MaterialPage(
+      name: RouterPath.onBoarding,
+      key: ValueKey(RouterPath.onBoarding),
+      child: const OnBoardingScreen(),
+    );
+  }
 
   @override
   State<OnBoardingScreen> createState() => _OnBoardingScreenState();
