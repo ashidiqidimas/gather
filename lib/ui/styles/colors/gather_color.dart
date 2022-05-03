@@ -18,4 +18,6 @@ class GatherColor {
   static const Color neutral = Color.fromRGBO(201, 209, 215, 1);
 
   static const Color grey = Color(0xFF65778B);
+
+  static const Color background = Color(0xFFFDFDFF);
 }

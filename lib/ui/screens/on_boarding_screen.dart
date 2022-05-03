@@ -1,6 +1,8 @@
 // Test
 import 'package:flutter/material.dart';
+import 'package:gather/business_logic/managers/all_managers.dart';
 import 'package:gather/ui/widgets/components/on_boarding_button.dart';
+import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../business_logic/constants/all_constants.dart';
@@ -188,7 +190,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                   AnimatedCrossFade(
                     firstChild: TextButton(
                       onPressed: () =>
-                          debugPrint('Skip button not implemented'),
+                          Provider.of<AppStateManager>(context).completeOnBoarding(),
                       child: Text(
                         'Skip',
                         style: GatherTextStyle.headline(context).copyWith(

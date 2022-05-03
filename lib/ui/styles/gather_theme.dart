@@ -23,9 +23,9 @@ class GatherTheme {
       colorSchemeSeed: const Color(0xFF2369F6),
       fontFamily: ('Poppins'),
       textTheme: lightTextTheme,
-      scaffoldBackgroundColor: Colors.white,
+      scaffoldBackgroundColor: GatherColor.background,
       appBarTheme: const AppBarTheme(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blue,
         elevation: 0.8,
         shadowColor: GatherColor.neutral,
       ),

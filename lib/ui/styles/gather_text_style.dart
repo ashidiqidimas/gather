@@ -14,13 +14,22 @@ class GatherTextStyle {
   }
 
   /// Use for postName in PostCard
-  static TextStyle subhead2(BuildContext context) {
+  static TextStyle subhead1(BuildContext context) {
     return Theme.of(context).textTheme.titleLarge!.copyWith(
           fontSize: 17,
           height: 1.294,
           fontWeight: FontWeight.w600,
           letterSpacing: 0.5,
         );
+  }
+
+  static TextStyle subhead2(BuildContext context) {
+    return Theme.of(context).textTheme.titleLarge!.copyWith(
+      fontSize: 15,
+      height: 1.33,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0,
+    );
   }
 
   static TextStyle headline(BuildContext context) {

@@ -43,7 +43,7 @@ Widget buildCardHeader(BuildContext context) {
         children: [
           Text(
             'dhamar',
-            style: GatherTextStyle.subhead2(context),
+            style: GatherTextStyle.subhead1(context),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
