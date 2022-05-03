@@ -66,10 +66,55 @@ class SignUpScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 48,
                 ),
-                // TODO: social button
+                ElevatedButton(
+                  onPressed: () => debugPrint('Unimplemented: Apple sign up'),
+                  child: Text(
+                    'Continue with Apple',
+                    style: GatherTextStyle.headline(context).copyWith(
+                      color: Colors.grey[100],
+                    ),
+                  ),
+                  style: GatherButtonStyle.primaryLarge.copyWith(
+                    backgroundColor: MaterialStateProperty.all(
+                      Colors.black,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                OutlinedButton(
+                  onPressed: () => debugPrint(
+                      'Unimplemented: Continue with Google is not implemented'),
+                  child: Text(
+                    'Continue with Google',
+                    style: GatherTextStyle.headline(context).copyWith(
+                      color: GatherTextColor.secondary,
+                    ),
+                  ),
+                  style: GatherButtonStyle.primaryLarge.copyWith(
+                    backgroundColor: MaterialStateProperty.all(Colors.white),
+                    overlayColor: MaterialStateProperty.all(Colors.grey[100]),
+                    side: MaterialStateProperty.all(
+                      const BorderSide(color: Colors.black, width: 1),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                Center(
+                  child: Text(
+                    'OR',
+                    style: GatherTextStyle.body3(context),
+                  ),
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
               ],
             ),
           ),
