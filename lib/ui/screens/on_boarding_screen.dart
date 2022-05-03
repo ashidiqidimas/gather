@@ -17,6 +17,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
   late PageController _controller;
   late AnimationController _animationController;
   int _pageIndex = 0;
+  bool backwardAnimationCompleted = false;
 
   @override
   void initState() {
@@ -67,13 +68,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                 _pageIndex = index;
                 if (_pageIndex == 3) {
                   _playForward();
-                }
-                else if (_pageIndex == 2) {
+                } else if (_pageIndex == 2) {
                   _playBackward();
                 }
               });
-
-
             },
             controller: _controller,
             children: [
@@ -172,44 +170,46 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               buildLeftButton(),
-              Row(
+              Stack(
                 children: [
-                  // AnimatedCrossFade(
-                  //   crossFadeState: _pageIndex != 3
-                  //       ? CrossFadeState.showFirst
-                  //       : CrossFadeState.showSecond,
-                  //   duration: const Duration(milliseconds: 200),
-                  //   firstChild:
-                  //   secondChild: const SizedBox(
-                  //     width: 53,
-                  //     height: 50,
-                  //   ),
-                  // ),
-                  _pageIndex != 3
-                      ? TextButton(
-                          onPressed: () => debugPrint('Skip button not implemented'),
-                          child: Text(
-                            'Skip',
-                            style: GatherTextStyle.headline(context).copyWith(
-                              color: GatherColor.primarySwatch[500]!,
-                            ),
-                          ),
-                          style: TextButton.styleFrom(
-                            minimumSize: const Size(53, 50),
-                          ),
-                        )
-                      : const SizedBox(
-                          width: 53,
-                          height: 50,
+                  const SizedBox(
+                    height: 50,
+                    width: 156,
+                  ),
+                  AnimatedCrossFade(
+                    firstChild: TextButton(
+                      onPressed: () =>
+                          debugPrint('Skip button not implemented'),
+                      child: Text(
+                        'Skip',
+                        style: GatherTextStyle.headline(context).copyWith(
+                          color: GatherColor.primarySwatch[500]!,
                         ),
+                      ),
+                      style: TextButton.styleFrom(
+                        minimumSize: const Size(53, 50),
+                      ),
+                    ),
+                    secondChild: const SizedBox(
+                      width: 53,
+                      height: 50,
+                    ),
+                    crossFadeState: _pageIndex != 3
+                        ? CrossFadeState.showFirst
+                        : CrossFadeState.showSecond,
+                    duration: const Duration(milliseconds: 400),
+                  ),
                   const SizedBox(
                     width: 16,
                   ),
-                  OnBoardingButton(
-                    controller: _controller,
-                    pageIndex: _pageIndex,
-                    animationController: _animationController,
-                  )
+                  Positioned(
+                    right: 0,
+                    child: OnBoardingButton(
+                      controller: _controller,
+                      pageIndex: _pageIndex,
+                      animationController: _animationController,
+                    ),
+                  ),
                 ],
               )
             ],
@@ -240,9 +240,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
             }
           });
           _controller.previousPage(
-          duration: const Duration(milliseconds: 350),
-          curve: Curves.easeOut,
-        );
+            duration: const Duration(milliseconds: 350),
+            curve: Curves.easeOut,
+          );
         },
         child: Text(
           'Back',
