@@ -24,10 +24,10 @@ class GatherTheme {
       fontFamily: ('Poppins'),
       textTheme: lightTextTheme,
       scaffoldBackgroundColor: GatherColor.background,
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         backgroundColor: Colors.blue,
         elevation: 0.8,
-        shadowColor: GatherColor.neutral,
+        shadowColor: GatherColor.neutralSwatch[500],
       ),
     );
   }

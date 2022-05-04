@@ -18,4 +18,10 @@ class SignUpManager extends ChangeNotifier {
     // Provider.of(context)
     notifyListeners();
   }
+
+}
+
+class SignUpIndex {
+  static const start = 0;
+  static const continueWIthEmail = 1;
 }

@@ -10,5 +10,6 @@ class GatherButtonStyle {
         borderRadius: BorderRadius.circular(12),
       ),
     ),
+    elevation: MaterialStateProperty.all(0),
   );
 }

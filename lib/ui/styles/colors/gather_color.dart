@@ -13,9 +13,19 @@ class GatherColor {
     900: Color(0xff061c76),
   };
 
-  static const Color secondary = Color(0x00eec142);
+  static const Map<int, Color> neutralSwatch = {
+    100: Color(0xFFF7FAFB),
+    200: Color(0xFFEFF5F8),
+    300: Color(0xFFDFE6EB),
+    400: Color(0xFFC9D1D7),
+    500: Color(0xFFADB5BD),
+    600: Color(0xFF7E8EA2),
+    700: Color(0xFF576A88),
+    800: Color(0xFF374A6D),
+    900: Color(0xFF21325A),
+  };
 
-  static const Color neutral = Color.fromRGBO(201, 209, 215, 1);
+  static const Color secondary = Color(0x00eec142);
 
   static const Color grey = Color(0xFF65778B);
 
