@@ -80,6 +80,7 @@ class GatherTextStyle {
     );
   }
 
+  /// Body style with primary color
   static TextStyle body1(BuildContext context) {
     return Theme.of(context).textTheme.labelLarge!.copyWith(
           fontSize: 17,
@@ -89,6 +90,7 @@ class GatherTextStyle {
         );
   }
 
+  /// Body style with secondary color
   static TextStyle body2(BuildContext context) {
     return Theme.of(context).textTheme.labelMedium!.copyWith(
       fontSize: 17,
@@ -98,6 +100,7 @@ class GatherTextStyle {
     );
   }
 
+  /// Body style with tertiary color
   static TextStyle body3(BuildContext context) {
     return Theme.of(context).textTheme.labelSmall!.copyWith(
       fontSize: 17,
@@ -108,7 +111,7 @@ class GatherTextStyle {
   }
 
   /// Use for location in PostName
-  static TextStyle caption(BuildContext context) {
+  static TextStyle footnote(BuildContext context) {
     return Theme.of(context).textTheme.labelSmall!.copyWith(
           fontSize: 13,
           height: 1.15,

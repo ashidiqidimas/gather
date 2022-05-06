@@ -25,9 +25,13 @@ class GatherColor {
     900: Color(0xFF21325A),
   };
 
+  static const formBackground = Color(0xFFF3F6FC);
+
   static const Color secondary = Color(0x00eec142);
 
   static const Color grey = Color(0xFF65778B);
 
   static const Color background = Color(0xFFFDFDFF);
+
+  static const Color error = Color(0xFFD63D20);
 }

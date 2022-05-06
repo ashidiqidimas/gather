@@ -57,7 +57,7 @@ Widget buildCardHeader(BuildContext context) {
               ),
               Text(
                 'Sentul, Jawa Barat',
-                style: GatherTextStyle.caption(context),
+                style: GatherTextStyle.footnote(context),
               ),
             ],
           ),
