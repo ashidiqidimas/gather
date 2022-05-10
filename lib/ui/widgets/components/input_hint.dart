@@ -9,6 +9,13 @@ class InputHint extends StatelessWidget {
         _color = GatherColor.error,
         super(key: key);
 
+  const InputHint.withInfo({
+    Key? key,
+    required this.text,
+  })  : _icon = 'assets/shared/icons/information-icon.png',
+        _color = GatherColor.info,
+        super(key: key);
+
   final String _icon;
   final Color _color;
   final String text;

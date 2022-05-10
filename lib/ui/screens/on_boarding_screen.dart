@@ -1,5 +1,6 @@
 // Test
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gather/business_logic/managers/all_managers.dart';
 import 'package:gather/ui/widgets/components/on_boarding_button.dart';
 import 'package:provider/provider.dart';
@@ -69,6 +70,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -87,27 +89,27 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
             controller: _controller,
             children: [
               buildOnBoardingPage(
-                  image: 'assets/shared/images/on_boarding_img_1.png',
+                  image: 'assets/shared/images/on-boarding-1-illustration.png',
                   title: 'Find Friends\nfor Travel',
                   description:
                       'Invite someone to your trip, join an open trip, or travel '
                       'with complete strangers. Your will never feel lonely again.'),
               buildOnBoardingPage(
-                image: 'assets/shared/images/on_boarding_img_2.png',
+                image: 'assets/shared/images/on-boarding-2-illustration.png',
                 title: 'Find Hidden\nGems Near You',
                 description:
                     'See places your friends travel to or explore what is '
                     'trending near you. You will never running out of places to go.',
               ),
               buildOnBoardingPage(
-                image: 'assets/shared/images/on_boarding_img_3.png',
+                image: 'assets/shared/images/on-boarding-3-illustration.png',
                 title: 'Book Ticket\nEasily',
                 description:
                     'Book your ticket with one click at home, then scan your '
                     'e-ticket at the locket. Travel can’t get easier than this.',
               ),
               buildOnBoardingPage(
-                  image: 'assets/shared/images/on_boarding_img_4.png',
+                  image: 'assets/shared/images/on-boarding-4-illustration.png',
                   title: 'Pay Split Bills\nEasily',
                   description:
                       'We automatically calculate the bills and charge everyone for '

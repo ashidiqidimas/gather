@@ -25,11 +25,14 @@ class AppRouter extends RouterDelegate
     required this.profileManager,
   }) : navigatorKey = GlobalKey<NavigatorState>() {
     appStateManager.addListener(notifyListeners);
+    signUpManager.addListener(notifyListeners);
   }
 
   /// Configure navigator, list of pages, and pages that is displayed
   @override
   Widget build(BuildContext context) {
+    var appState = Provider.of<AppStateManager>(context, listen: false);
+    var signUpState = Provider.of<SignUpManager>(context, listen: false);
     return Navigator(
       key: navigatorKey,
       onPopPage: _handlePopPage,
@@ -37,10 +40,23 @@ class AppRouter extends RouterDelegate
         if (!Provider.of<AppStateManager>(context, listen: false)
             .isOnBoardingComplete)
           OnBoardingScreen.page(),
-        if (!Provider.of<AppStateManager>(context, listen: false).isLoggedIn &&
-            Provider.of<SignUpManager>(context).isSigningUp)
+        if (Provider.of<AppStateManager>(context, listen: false)
+                .isOnBoardingComplete &&
+            !Provider.of<AppStateManager>(context, listen: false).isLoggedIn &&
+            Provider.of<SignUpManager>(context, listen: false).isSigningUp &&
+            Provider.of<SignUpManager>(context, listen: false)
+                    .getCurrentIndex == 0)
           SignUpScreen.page(),
-        if (!Provider.of<AppStateManager>(context, listen: false).isLoggedIn &&
+        if (Provider.of<AppStateManager>(context, listen: false)
+            .isOnBoardingComplete &&
+            !Provider.of<AppStateManager>(context, listen: false).isLoggedIn &&
+            Provider.of<SignUpManager>(context, listen: false).isSigningUp &&
+            Provider.of<SignUpManager>(context, listen: false)
+                .getCurrentIndex == 1)
+          SignUpAccountScreen.page(),
+        if (Provider.of<AppStateManager>(context, listen: false)
+                .isOnBoardingComplete &&
+            !Provider.of<AppStateManager>(context, listen: false).isLoggedIn &&
             Provider.of<SignInManager>(context).isSigningIn)
           SignInScreen.page(),
         // TODO: Add login screen
@@ -71,6 +87,7 @@ class AppRouter extends RouterDelegate
   @override
   void dispose() {
     appStateManager.removeListener(notifyListeners);
+    signUpManager.dispose();
     super.dispose();
   }
 }

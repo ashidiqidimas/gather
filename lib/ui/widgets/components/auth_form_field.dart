@@ -1,17 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:email_validator/email_validator.dart';
 
 import '../../styles/all_styles.dart';
 import 'input_hint.dart';
 
 class AuthFormField extends StatefulWidget {
-  AuthFormField({
+  AuthFormField.forEmail({
     Key? key,
     required this.title,
     required this.textEditingController,
-  }) : super(key: key);
+  }) : super(key: key) {
+    _validator = (_) {
+      final value = textEditingController.text;
+      if (value.isEmpty) {
+        return 'Please input an email address';
+      } else {
+        if (!EmailValidator.validate(value)) {
+          return 'Please check your email address';
+        }
+      }
+      return null;
+    };
+  }
 
   final String title;
-  TextEditingController textEditingController;
+  final TextEditingController textEditingController;
+
+  late final String? Function(String? value) _validator;
 
   @override
   State<AuthFormField> createState() => _AuthFormFieldState();
@@ -22,6 +37,8 @@ class _AuthFormFieldState extends State<AuthFormField> {
   Widget build(BuildContext context) {
     return FormField(
       builder: _builder,
+      validator: widget._validator
+      // TODO: Change validator according _isFirstEmailField
     );
   }
 
@@ -37,6 +54,7 @@ class _AuthFormFieldState extends State<AuthFormField> {
           height: 4,
         ),
         TextField(
+          keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
             fillColor: GatherColor.formBackground,
             filled: true,
@@ -49,6 +67,12 @@ class _AuthFormFieldState extends State<AuthFormField> {
                 borderSide: BorderSide(
                   color: GatherColor.primarySwatch[500]!,
                 )),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(
+                color: GatherColor.error,
+              ),
+            ),
             contentPadding: const EdgeInsets.all(16),
             hintText: 'example@mail.com',
             hintStyle: GatherTextStyle.body3(context),
@@ -56,9 +80,10 @@ class _AuthFormFieldState extends State<AuthFormField> {
           controller: widget.textEditingController,
           style: GatherTextStyle.body1(context),
         ),
-        if (true)
-          const SizedBox(height: 8,),
-          const InputHint.withError(text: 'This email already exist'),
+        const SizedBox(
+          height: 8,
+        ),
+        if (state.hasError) InputHint.withError(text: state.errorText!),
       ],
     );
   }

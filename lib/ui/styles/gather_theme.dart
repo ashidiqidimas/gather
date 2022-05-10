@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gather/ui/styles/colors/gather_color.dart';
 
 import 'colors/gather_text_color.dart';
@@ -28,6 +29,7 @@ class GatherTheme {
         backgroundColor: Colors.blue,
         elevation: 0.8,
         shadowColor: GatherColor.neutralSwatch[500],
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
       ),
     );
   }

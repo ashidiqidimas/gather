@@ -34,4 +34,6 @@ class GatherColor {
   static const Color background = Color(0xFFFDFDFF);
 
   static const Color error = Color(0xFFD63D20);
+
+  static const Color info = Color(0xFF336FD0);
 }

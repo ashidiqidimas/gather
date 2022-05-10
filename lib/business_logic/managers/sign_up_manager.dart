@@ -5,11 +5,19 @@ import 'package:flutter/material.dart';
 /// By default, [isSigningUp] is set to true.
 class SignUpManager extends ChangeNotifier {
   bool _isSigningUp = true;
-  
+  int _currentIndex = 0;
+
   bool get isSigningUp => _isSigningUp;
+  int get getCurrentIndex => _currentIndex;
   
   void hideSignUp() {
     _isSigningUp = false;
+    notifyListeners();
+  }
+
+  void nextSignUpScreen() {
+    _currentIndex++;
+    debugPrint('sign up index: $_currentIndex');
     notifyListeners();
   }
   
@@ -19,9 +27,4 @@ class SignUpManager extends ChangeNotifier {
     notifyListeners();
   }
 
-}
-
-class SignUpIndex {
-  static const start = 0;
-  static const continueWIthEmail = 1;
 }

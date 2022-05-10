@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "586094974310",
+    "project_id": "gather-29852",
+    "storage_bucket": "gather-29852.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:586094974310:android:c7c380e79dedf83dc9a4a7",
+        "android_client_info": {
+          "package_name": "com.ashidiqidimas.gather"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "586094974310-t98kd2n4foc22kt9a1of6dgqc0h9jqvj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ashidiqidimas.gather",
+            "certificate_hash": "3db491e7a6e8cc106d76703830f047a84854963f"
+          }
+        },
+        {
+          "client_id": "586094974310-q8tepc0ds1leo2fa648ak73lo2dtevtl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLVLZ4bEXXiy5alLQppEEb_m_Z-F-DyZk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "586094974310-q8tepc0ds1leo2fa648ak73lo2dtevtl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "586094974310-qvmqbdu0otrla4apim4qsk2h4g7b3fng.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ashidiqidimas.gather"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

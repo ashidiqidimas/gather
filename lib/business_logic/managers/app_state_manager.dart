@@ -34,6 +34,7 @@ class AppStateManager extends ChangeNotifier {
       _isOnBoardingComplete = false;
     }
     debugPrint('is onboarding complete? $_isOnBoardingComplete');
+    // _isOnBoardingComplete = false; // TODO: Delete
     notifyListeners();
   }
 
