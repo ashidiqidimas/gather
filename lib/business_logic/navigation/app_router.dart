@@ -37,22 +37,14 @@ class AppRouter extends RouterDelegate
       key: navigatorKey,
       onPopPage: _handlePopPage,
       pages: [
-        if (!Provider.of<AppStateManager>(context, listen: false)
-            .isOnBoardingComplete)
-          OnBoardingScreen.page(),
-        if (Provider.of<AppStateManager>(context, listen: false)
-                .isOnBoardingComplete &&
-            !Provider.of<AppStateManager>(context, listen: false).isLoggedIn &&
-            Provider.of<SignUpManager>(context, listen: false).isSigningUp &&
-            Provider.of<SignUpManager>(context, listen: false)
-                    .getCurrentIndex == 0)
+        if (!appState.isOnBoardingComplete) OnBoardingScreen.page(),
+        if (!appState.isLoggedIn &&
+            signUpState.isSigningUp &&
+            signUpState.getCurrentIndex >= 0)
           SignUpScreen.page(),
-        if (Provider.of<AppStateManager>(context, listen: false)
-            .isOnBoardingComplete &&
-            !Provider.of<AppStateManager>(context, listen: false).isLoggedIn &&
-            Provider.of<SignUpManager>(context, listen: false).isSigningUp &&
-            Provider.of<SignUpManager>(context, listen: false)
-                .getCurrentIndex == 1)
+        if (!appState.isLoggedIn &&
+            signUpState.isSigningUp &&
+            signUpState.getCurrentIndex >= 1)
           SignUpAccountScreen.page(),
         if (Provider.of<AppStateManager>(context, listen: false)
                 .isOnBoardingComplete &&
@@ -67,6 +59,10 @@ class AppRouter extends RouterDelegate
 
   /// Handle back button when pressed.
   bool _handlePopPage(Route<dynamic> route, result) {
+    if (route.settings.name!.contains('sign-up')) {
+      signUpManager.backSignUpScreen();
+    }
+
     final didPop = !route.didPop(result);
     if (didPop) {
       return false;

@@ -118,12 +118,12 @@ class _SignUpScreenState extends State<SignUpScreen>
                                 textEditingController: _emailEditingController,
                               ),
                               if (_isEmailAlreadyExist)
-                                const InputHint.withError(text: 'Email already exist'),
+                                const InputHint.withError(
+                                    text: 'Email already exist'),
                             ],
                           ),
                         ),
                       ),
-
                       const SizedBox(
                         height: 16,
                       ),
@@ -154,17 +154,15 @@ class _SignUpScreenState extends State<SignUpScreen>
                           });
                           debugPrint('Email already exist');
                         } else {
-                          Provider.of<SignUpManager>(context, listen: false).nextSignUpScreen();
+                          Provider.of<SignUpManager>(context, listen: false)
+                              .nextSignUpScreen();
+                          Provider.of<ProfileManager>(context, listen: false)
+                              .changeEmail(_emailEditingController.text);
                           debugPrint('Email not exist');
                         }
                       } else {
                         debugPrint('Email not valid');
                       }
-
-                      // TODO: Handle email already exist
-                      // TODO: Sign Up using Firebase Auth
-                      // _isUsingEmail = false; // TODO: Delete
-                      // _playBackward();
                     } else {
                       setState(() {
                         _isUsingEmail = true;

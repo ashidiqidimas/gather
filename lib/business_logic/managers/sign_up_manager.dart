@@ -17,7 +17,11 @@ class SignUpManager extends ChangeNotifier {
 
   void nextSignUpScreen() {
     _currentIndex++;
-    debugPrint('sign up index: $_currentIndex');
+    notifyListeners();
+  }
+
+  void backSignUpScreen() {
+    _currentIndex--;
     notifyListeners();
   }
   

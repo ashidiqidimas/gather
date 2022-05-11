@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:gather/business_logic/services/auth_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../models/user.dart';
+import '../services/auth_service.dart';
+import '../constants/all_constants.dart';
+
 
 class ProfileManager extends ChangeNotifier {
-  late User _user;
+  late String _email;
+
+  String get email => _email;
 
   // TODO: Create a constructor that will initialize the properties from shared preferences
-
 
   /// Returns true if email address is already exist.
   Future<bool> checkEmail(String emailAddress) async {
@@ -24,9 +27,20 @@ class ProfileManager extends ChangeNotifier {
     return isEmailExist;
   }
 
-  void changeEmail(String newEmail) {
-    _user.email = newEmail;
+  void changeEmail(String newEmail) async {
+    _email = newEmail;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(keyEmail, newEmail);
     notifyListeners();
+  }
+
+  void fetchEmail() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (prefs.containsKey(keyEmail)) {
+      final email = prefs.getString(keyEmail)!;
+      _email = email;
+      notifyListeners();
+    }
   }
 
   // TODO: Create method to change [User] properties:
