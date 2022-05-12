@@ -114,7 +114,7 @@ class GatherTextStyle {
   static TextStyle footnote(BuildContext context) {
     return Theme.of(context).textTheme.labelSmall!.copyWith(
           fontSize: 13,
-          height: 1.15,
+          height: 1.384,
           fontWeight: FontWeight.w400,
           letterSpacing: 0,
         );

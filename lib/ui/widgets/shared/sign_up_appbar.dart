@@ -19,7 +19,7 @@ class SignUpAppbar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final currentTitle = titles[
-        Provider.of<SignUpManager>(context, listen: false).getCurrentIndex];
+        Provider.of<SignUpManager>(context, listen: false).getCurrentIndex - 1];
     return AppBar(
       iconTheme: IconThemeData(
         color: GatherColor.primarySwatch[500],

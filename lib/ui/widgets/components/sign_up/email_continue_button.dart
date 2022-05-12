@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../styles/all_styles.dart';
+import '../../../styles/all_styles.dart';
 
 class EmailContinueButton extends StatelessWidget {
   EmailContinueButton({
@@ -89,7 +89,7 @@ class EmailContinueButton extends StatelessWidget {
             if (states.contains(MaterialState.pressed) && !isUsingEmail) {
               return GatherColor.primarySwatch[500]!;
             }
-            return GatherColor.primarySwatch[100]!;
+            return GatherColor.primarySwatch[300]!;
           }),
         ),
       ),

@@ -23,6 +23,7 @@ class InputHint extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       // crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -33,10 +34,12 @@ class InputHint extends StatelessWidget {
         const SizedBox(
           width: 4,
         ),
-        Text(
-          text,
-          style: GatherTextStyle.footnote(context).copyWith(
-            color: _color,
+        Expanded(
+          child: Text(
+            text,
+            style: GatherTextStyle.footnote(context).copyWith(
+              color: _color,
+            ),
           ),
         ),
       ],
