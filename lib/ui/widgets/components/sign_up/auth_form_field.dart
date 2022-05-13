@@ -37,7 +37,7 @@ class AuthFormField extends StatefulWidget {
       this.isLastForm = false,
       this.textInputType,
       this.validator,
-      required this.infoText,
+      this.infoText,
       this.autofillHints})
       : super(key: key) {
     _validator = (_) {
@@ -57,7 +57,7 @@ class AuthFormField extends StatefulWidget {
   final bool isLastForm;
   final TextInputType? textInputType;
   final String hintText;
-  final String infoText;
+  final String? infoText;
   final String? Function(String value)? validator;
   final Iterable<String>? autofillHints;
 
@@ -126,7 +126,7 @@ class _AuthFormFieldState extends State<AuthFormField> {
                           ? _isHidePassword = false
                           : _isHidePassword = true;
                     }),
-              splashColor: Colors.transparent,
+                    splashColor: Colors.transparent,
                   )
                 : null,
           ),
@@ -141,9 +141,10 @@ class _AuthFormFieldState extends State<AuthFormField> {
         ),
         if (state.hasError) InputHint.withError(text: state.errorText!),
         if (!state.hasError &&
-            widget.textInputType != TextInputType.emailAddress)
+            widget.textInputType != TextInputType.emailAddress &&
+            widget.infoText != null)
           InputHint.withInfo(
-            text: widget.infoText,
+            text: widget.infoText!,
           ),
       ],
     );

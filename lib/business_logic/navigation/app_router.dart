@@ -37,7 +37,10 @@ class AppRouter extends RouterDelegate
       key: navigatorKey,
       onPopPage: _handlePopPage,
       pages: [
+        // On boarding
         if (!appState.isOnBoardingComplete) OnBoardingScreen.page(),
+
+        // Sign up
         if (!appState.isLoggedIn &&
             signUpState.isSigningUp &&
             signUpState.getCurrentIndex >= 0)
@@ -46,12 +49,17 @@ class AppRouter extends RouterDelegate
             signUpState.isSigningUp &&
             signUpState.getCurrentIndex >= 1)
           SignUpAccountScreen.page(),
-        if (Provider.of<AppStateManager>(context, listen: false)
-                .isOnBoardingComplete &&
-            !Provider.of<AppStateManager>(context, listen: false).isLoggedIn &&
-            Provider.of<SignInManager>(context).isSigningIn)
+        // if (!appStateManager.isLoggedIn &&
+        //     signUpManager.isSigningUp &&
+        //     signUpManager.getCurrentIndex >= 2)
+        //   SignUpProfileScreen.page(),
+        SignUpProfileScreen.page(), // TODO: Delete
+
+        // Sign in
+        if (appState.isOnBoardingComplete &&
+            !appState.isLoggedIn &&
+            signInManager.isSigningIn)
           SignInScreen.page(),
-        // TODO: Add login screen
         // TODO: Add home screen
       ],
     );

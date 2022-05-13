@@ -6,3 +6,4 @@ export 'explore_screen.dart';
 export 'my_order_screen.dart';
 export 'account_screen.dart';
 export 'sign_up_account_screen.dart';
+export 'sign_up_profile_screen.dart';

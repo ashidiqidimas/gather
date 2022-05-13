@@ -8,7 +8,6 @@ import 'package:gather/ui/widgets/shared/all_shared_widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../../business_logic/constants/all_constants.dart';
-import '../widgets/components/sign_up/indicator.dart';
 import '../widgets/components/sign_up/sign_up_page_indicator.dart';
 
 class SignUpAccountScreen extends StatefulWidget {
@@ -44,7 +43,6 @@ class _SignUpAccountScreenState extends State<SignUpAccountScreen> {
           children: [
             Expanded(
               child: SingleChildScrollView(
-                // physics: const BouncingScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -56,6 +54,8 @@ class _SignUpAccountScreenState extends State<SignUpAccountScreen> {
                         log('Continue to profile button pressed');
                         if (_formKey.currentState!.validate()) {
                           // TODO: Register new account
+                          // TODO: Save email to ProfileManager
+                          // TODO: Save username to ProfileManager
                           // TODO: go to profile sign up page
                         }
                       },
@@ -83,39 +83,38 @@ class _SignUpAccountScreenState extends State<SignUpAccountScreen> {
 
   Form buildForm() {
     return Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        AuthFormField(
-                          title: 'Username',
-                          textEditingController: _usernameEditingController,
-                          hintText: 'my_awesome_username',
-                          infoText:
-                              'Username can contains alphabets, numbers, '
-                              'and underscores',
-                          // TODO: Create username validator regex
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        AuthFormField(
-                          title: 'Password',
-                          textEditingController: _passwordEditingController,
-                          hintText: 'password',
-                          infoText:
-                              'Minimum 8 characters and contains alphabets'
-                              ', numbers, special characters.',
-                          textInputType: TextInputType.visiblePassword,
-                          // autofillHints: const [AutofillHints.newPassword],
-                          // isLastForm: false,
-                          // TODO: Create password validator regex
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                      ],
-                    ),
-                  );
+      key: _formKey,
+      child: Column(
+        children: [
+          AuthFormField(
+            title: 'Username',
+            textEditingController: _usernameEditingController,
+            hintText: 'my_awesome_username',
+            infoText: 'Username can contains alphabets, numbers, '
+                'and underscores',
+            textInputType: TextInputType.name,
+            // TODO: Create username validator regex
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          AuthFormField(
+            title: 'Password',
+            textEditingController: _passwordEditingController,
+            hintText: 'password',
+            infoText: 'Minimum 8 characters and contains alphabets'
+                ', numbers, special characters.',
+            textInputType: TextInputType.visiblePassword,
+            // autofillHints: const [AutofillHints.newPassword],
+            // isLastForm: false,
+            // TODO: Create password validator regex
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+        ],
+      ),
+    );
   }
 
   Widget buildEmailText(BuildContext context) {
@@ -156,6 +155,7 @@ class _SignUpAccountScreenState extends State<SignUpAccountScreen> {
   @override
   void dispose() {
     _passwordEditingController.dispose();
+    _usernameEditingController.dispose();
     super.dispose();
   }
 }

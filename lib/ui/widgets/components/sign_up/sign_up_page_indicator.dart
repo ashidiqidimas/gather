@@ -24,6 +24,7 @@ class SignUpPageIndicator extends StatelessWidget {
               child: Text(
                 'Account',
                 style: GatherTextStyle.subhead2(context).copyWith(
+                  fontWeight: index == 0 ? FontWeight.w600 : FontWeight.w400,
                   color: GatherColor.primarySwatch[600],
                 ),
               ),
@@ -43,6 +44,7 @@ class SignUpPageIndicator extends StatelessWidget {
               child: Text(
                 'Profile',
                 style: GatherTextStyle.subhead2(context).copyWith(
+                  fontWeight: index == 1 ? FontWeight.w600 : FontWeight.w400,
                   color: index >= 1
                       ? GatherColor.primarySwatch[600]
                       : GatherColor.primarySwatch[400],
@@ -72,6 +74,7 @@ class SignUpPageIndicator extends StatelessWidget {
               child: Text(
                 'About',
                 style: GatherTextStyle.subhead2(context).copyWith(
+                  fontWeight: index == 2 ? FontWeight.w600 : FontWeight.w400,
                   color: index == 2
                       ? GatherColor.primarySwatch[600]
                       : GatherColor.primarySwatch[400],
