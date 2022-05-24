@@ -1,46 +1,66 @@
 import 'package:flutter/material.dart';
-import 'package:gather/ui/styles/gather_theme.dart';
+import 'package:provider/provider.dart';
 
-import '../ui/widgets/post_card.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+import 'ui/styles/gather_theme.dart';
+import 'business_logic/managers/all_managers.dart';
+import 'business_logic/navigation/app_router.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: GatherTheme.light(),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final _appStateManager = AppStateManager();
+  final _profileManager = ProfileManager();
+  final _signUpManager = SignUpManager();
+  final _signInManager = SignInManager();
+
+  late AppRouter _appRouter;
+
+  @override
+  void initState() {
+    _appRouter = AppRouter(
+      appStateManager: _appStateManager,
+      profileManager: _profileManager,
+      signUpManager: _signUpManager,
+      signInManager: _signInManager,
     );
+
+    super.initState();
   }
-}
 
-class MyHomePage extends StatefulWidget {
-  final String title;
-
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          PostCard(),
-        ],
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => _appStateManager),
+        ChangeNotifierProvider(create: (context) => _signUpManager),
+        ChangeNotifierProvider(create: (context) => _signInManager),
+        ChangeNotifierProvider(create: (context) => _profileManager),
+      ],
+      // If want to implement dark mode, wrap [MaterialApp] in Consumer<ProfileManager>
+      child: MaterialApp(
+        title: '2Gather',
+        theme: GatherTheme.light(),
+        // TODO: Set home to a router
+        home: Router(
+          routerDelegate: _appRouter,
+          // TODO: Add backButtonDispatcher
+        ),
       ),
     );
   }

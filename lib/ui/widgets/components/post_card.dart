@@ -43,7 +43,7 @@ Widget buildCardHeader(BuildContext context) {
         children: [
           Text(
             'dhamar',
-            style: GatherTextStyle.subhead2(context),
+            style: GatherTextStyle.subhead1(context),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -57,7 +57,7 @@ Widget buildCardHeader(BuildContext context) {
               ),
               Text(
                 'Sentul, Jawa Barat',
-                style: GatherTextStyle.caption(context),
+                style: GatherTextStyle.footnote(context),
               ),
             ],
           ),
@@ -150,10 +150,10 @@ Widget buildCardFooter(BuildContext context) {
       ),
       TextButton(
         // TODO: Add onPressed callback
-        onPressed: null,
+        onPressed: () => debugPrint('See package pressed'),
         child: Text(
           'See Package',
-          style: GatherTextStyle.CTA3(context),
+          style: GatherTextStyle.button2(context),
         ),
         style: ButtonStyle(
           foregroundColor: MaterialStateProperty.all(Colors.white),
