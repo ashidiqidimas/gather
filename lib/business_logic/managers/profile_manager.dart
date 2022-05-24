@@ -27,6 +27,8 @@ class ProfileManager extends ChangeNotifier {
     return isEmailExist;
   }
 
+  
+
   void changeEmail(String newEmail) async {
     _email = newEmail;
     final prefs = await SharedPreferences.getInstance();

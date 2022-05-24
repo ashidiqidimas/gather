@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:gather/ui/screens/profile_image_picker.dart';
 import 'package:gather/ui/widgets/components/sign_up/auth_form_field.dart';
 import 'package:gather/ui/widgets/shared/all_shared_widgets.dart';
 import 'package:gather/ui/widgets/shared/buttons/tertiary_button.dart';
@@ -120,6 +121,8 @@ class _SignUpProfileScreenState extends State<SignUpProfileScreen> {
           ),
           TertiaryButton(
             onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ProfileImagePicker()));
               log('Change Photo button pressed');
             },
             labelText: 'Change Photo',
