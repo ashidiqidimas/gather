@@ -1,4 +1,5 @@
-class RouterPath {
+abstract class RouterPath {
+  static String build = '/build';
   static String onBoarding = '/on-boarding';
   static String signUp = '/sign-up';
   static String signUpAccount = '/sign-up/account';

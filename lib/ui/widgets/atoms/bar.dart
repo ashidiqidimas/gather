@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../styles/colors/gather_color.dart';
+import '../../styles/colors/gather_color.dart';
 
-class Indicator extends StatelessWidget {
-  const Indicator({
+class Bar extends StatelessWidget {
+  const Bar({
     Key? key,
     required this.isActive,
   }) : super(key: key);
