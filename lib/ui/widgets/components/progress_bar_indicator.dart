@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../styles/all_styles.dart';
 import 'indicator.dart';
 
-class SignUpPageIndicator extends StatelessWidget {
-  const SignUpPageIndicator({
+class ProgressBarIndicator extends StatelessWidget {
+  const ProgressBarIndicator({
     Key? key,
     required this.index,
   }) : super(key: key);
