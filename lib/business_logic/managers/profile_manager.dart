@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../services/auth_service.dart';
-import '../constants/all_constants.dart';
+import '../../constants/all_constants.dart';
 
 
 class ProfileManager extends ChangeNotifier {

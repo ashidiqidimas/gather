@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:gather/business_logic/constants/all_constants.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfileImagePicker extends StatefulWidget {

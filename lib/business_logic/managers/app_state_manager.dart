@@ -1,11 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../constants/all_constants.dart';
+import '../../constants/all_constants.dart';
+
 
 class AppStateManager extends ChangeNotifier {
   AppStateManager() {
-    fetchSharedPreferences();
+    fetchOnBoardingSharedPreferences();
     _fetchAuthState();
   }
 
@@ -23,7 +26,8 @@ class AppStateManager extends ChangeNotifier {
   /// Returns whether user has logged in.
   bool get isLoggedIn => _isLoggedIn;
 
-  void fetchSharedPreferences() async {
+  /// Fetch from the device whether user has complete on boarding
+  Future<void> fetchOnBoardingSharedPreferences() async {
     final prefs = await SharedPreferences.getInstance();
     if (prefs.containsKey(keyIsOnBoardingComplete)) {
       prefs.getBool(keyIsOnBoardingComplete)!
@@ -33,7 +37,7 @@ class AppStateManager extends ChangeNotifier {
       await prefs.setBool(keyIsOnBoardingComplete, false);
       _isOnBoardingComplete = false;
     }
-    debugPrint('is onboarding complete? $_isOnBoardingComplete');
+    log('is onboarding complete? $_isOnBoardingComplete');
     // _isOnBoardingComplete = false; // TODO: Delete
     notifyListeners();
   }

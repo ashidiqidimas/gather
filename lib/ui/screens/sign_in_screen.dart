@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../business_logic/constants/router_path.dart';
+import '../../constants/router_path.dart';
 import '../styles/all_styles.dart';
 import 'all_screens.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../business_logic/constants/router_path.dart';
+import '../../constants/router_path.dart';
 import '../widgets/shared/all_shared_widgets.dart';
 import 'all_screens.dart';
 import '../../business_logic/managers/all_managers.dart';
