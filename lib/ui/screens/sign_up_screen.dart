@@ -143,23 +143,35 @@ class _SignUpScreenState extends State<SignUpScreen>
                       if (_formKey.currentState!.validate()) {
                         // if Email is valid
                         debugPrint('Email valid');
-                        bool isEmailAlreadyExist =
-                            await Provider.of<ProfileManager>(context,
-                                    listen: false)
-                                .checkEmail(_emailEditingController.text);
-                        debugPrint('check email: $isEmailAlreadyExist');
-                        if (isEmailAlreadyExist) {
-                          setState(() {
-                            _isEmailAlreadyExist = true;
-                          });
-                          debugPrint('Email already exist');
-                        } else {
-                          Provider.of<SignUpManager>(context, listen: false)
-                              .nextSignUpScreen();
-                          Provider.of<ProfileManager>(context, listen: false)
-                              .changeEmail(_emailEditingController.text);
-                          debugPrint('Email not exist');
+                        try {
+                          bool isEmailAlreadyExist =
+                          await Provider.of<ProfileManager>(context,
+                              listen: false)
+                              .checkEmail(_emailEditingController.text);
+                          debugPrint('check email: $isEmailAlreadyExist');
+                          if (isEmailAlreadyExist) {
+                            setState(() {
+                              _isEmailAlreadyExist = true;
+                            });
+                            debugPrint('Email already exist');
+                          } else {
+                            Provider.of<SignUpManager>(context, listen: false)
+                                .nextSignUpScreen();
+                            Provider.of<ProfileManager>(context, listen: false)
+                                .changeEmail(_emailEditingController.text);
+                            debugPrint('Email not exist');
+                          }
+                        } catch (e) {
+                          showDialog(context: context, builder: (_) => AlertDialog(
+                            title: const Text('Error'),
+                            content: Text(e.toString()),
+                            actions: [
+                              TextButton(onPressed: () {}, child: const Text('OK'))
+                            ],
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          ));
                         }
+                        
                       } else {
                         debugPrint('Email not valid');
                       }

@@ -1,11 +1,15 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gather/business_logic/models/failure.dart';
 // TODO: Import google sign in
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // Returns true if email address is already exist.
-  static Future<bool> checkEmail(String emailAddress, Function(Object error) errorHandler) async {
+  /// Returns true if email address is already exist.  
+  /// This function don't handle errors, you must handle it
+  static Future<bool> checkEmail(String emailAddress) async {
     try {
       // Fetch sign-in methods for the email address
       final list =
@@ -20,9 +24,13 @@ class AuthService {
         // Return false because email adress is not in use
         return false;
       }
-    } catch (error) {
-      errorHandler(error);
-      return true;
+    } on SocketException {
+      throw Failure(
+          'Can\'t connect to internet 😥. Please check your internet and try again');
+    } on FirebaseAuthException catch (e) {
+      throw Failure(e.message ?? 'Unknown error');
+    } catch (e) {
+      rethrow;
     }
   }
 }
