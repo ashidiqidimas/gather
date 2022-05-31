@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gather/ui/screens/build.dart';
 import 'package:provider/provider.dart';
 
 import '../managers/all_managers.dart';
@@ -37,11 +38,13 @@ class AppRouter extends RouterDelegate
       key: navigatorKey,
       onPopPage: _handlePopPage,
       pages: [
+        // BuildScreen.page(),
         // On boarding
-        if (!appState.isOnBoardingComplete) OnBoardingScreen.page(),
-
-        // Sign up
-        if (!appState.isLoggedIn &&
+        // if (!appState.isOnBoardingComplete) OnBoardingScreen.page(),
+        OnBoardingScreen.page(), // TODO: Delete
+        // // Sign up
+        if (appState.isOnBoardingComplete &&
+            !appState.isLoggedIn &&
             signUpState.isSigningUp &&
             signUpState.getCurrentIndex >= 0)
           SignUpScreen.page(),
@@ -49,17 +52,15 @@ class AppRouter extends RouterDelegate
             signUpState.isSigningUp &&
             signUpState.getCurrentIndex >= 1)
           SignUpAccountScreen.page(),
-        // if (!appStateManager.isLoggedIn &&
-        //     signUpManager.isSigningUp &&
-        //     signUpManager.getCurrentIndex >= 2)
-        //   SignUpProfileScreen.page(),
-        SignUpProfileScreen.page(), // TODO: Delete
-
+        if (!appStateManager.isLoggedIn &&
+            signUpManager.isSigningUp &&
+            signUpManager.getCurrentIndex >= 2)
+          SignUpProfileScreen.page(),
         // Sign in
-        if (appState.isOnBoardingComplete &&
-            !appState.isLoggedIn &&
-            signInManager.isSigningIn)
-          SignInScreen.page(),
+        // if (appState.isOnBoardingComplete &&
+        //     !appState.isLoggedIn &&
+        //     signInManager.isSigningIn)
+        //   SignInScreen.page(),
         // TODO: Add home screen
       ],
     );

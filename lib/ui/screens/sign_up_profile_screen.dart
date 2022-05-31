@@ -6,8 +6,8 @@ import 'package:gather/ui/widgets/components/sign_up/auth_form_field.dart';
 import 'package:gather/ui/widgets/shared/all_shared_widgets.dart';
 import 'package:gather/ui/widgets/shared/buttons/tertiary_button.dart';
 
-import '../../business_logic/constants/all_constants.dart';
-import '../widgets/components/sign_up/sign_up_page_indicator.dart';
+import '../../constants/router_path.dart';
+import '../widgets/components/progress_bar_indicator.dart';
 
 class SignUpProfileScreen extends StatefulWidget {
   const SignUpProfileScreen({Key? key}) : super(key: key);
@@ -70,8 +70,10 @@ class _SignUpProfileScreenState extends State<SignUpProfileScreen> {
                 ),
                 height: 56,
                 // color: Colors.red[50],
-                child: const SignUpPageIndicator(
-                  index: 1,
+                child: ProgressBarIndicator(
+                  activeIndex: 1,
+                  leftOffsets: const [19.5, 12, 11.5],
+                  stages: const ['Account', 'Profile', 'About'],
                 ),
               ),
           ],

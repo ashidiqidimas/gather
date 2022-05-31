@@ -4,7 +4,7 @@ import 'package:gather/business_logic/managers/all_managers.dart';
 import 'package:gather/ui/widgets/components/sign_up/input_hint.dart';
 import 'package:provider/provider.dart';
 
-import '../../business_logic/constants/router_path.dart';
+import '../../constants/router_path.dart';
 import '../styles/all_styles.dart';
 import '../widgets/components/sign_up/auth_form_field.dart';
 import '../widgets/components/sign_up/email_continue_button.dart';
