@@ -12,22 +12,20 @@ class ProfileManager extends ChangeNotifier {
 
   // TODO: Create a constructor that will initialize the properties from shared preferences
 
-  /// Returns true if email address is already exist.
+  /// Returns true if email address is already exist.  
+  /// /// This function don't handle errors, you must handle it in the UI
   Future<bool> checkEmail(String emailAddress) async {
-    errorHandler(error) {
-      // TODO: Handle when network error
-      Exception(error);
-    };
-
-    final isEmailExist = await AuthService.checkEmail(emailAddress, errorHandler);
-    if (isEmailExist) {
-      changeEmail(emailAddress);
+    try {
+      final isEmailExist = await AuthService.checkEmail(emailAddress);
+      if (isEmailExist) {
+        changeEmail(emailAddress);
+      }
+      return isEmailExist;
+    } catch (e) {
+      rethrow;
     }
-
-    return isEmailExist;
   }
 
-  
 
   void changeEmail(String newEmail) async {
     _email = newEmail;
@@ -45,14 +43,14 @@ class ProfileManager extends ChangeNotifier {
     }
   }
 
-  // TODO: Create method to change [User] properties:
-  // final String userID;
-  // final String username;
-  // final String firstName;
-  // final String lastName;
-  // final String photoURL;
-  // final DateTime birthdayDate;
-  // final String bio;
-  // final int numberOfPosts;
-  // final bool isPrivateAccount;
+// TODO: Create method to change [User] properties:
+// final String userID;
+// final String username;
+// final String firstName;
+// final String lastName;
+// final String photoURL;
+// final DateTime birthdayDate;
+// final String bio;
+// final int numberOfPosts;
+// final bool isPrivateAccount;
 }
