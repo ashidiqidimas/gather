@@ -8,7 +8,7 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   /// Returns true if email address is already exist.  
-  /// This function don't handle errors, you must handle it
+  /// This function don't handle errors, you must handle it by yourself
   static Future<bool> checkEmail(String emailAddress) async {
     try {
       // Fetch sign-in methods for the email address
@@ -17,8 +17,7 @@ class AuthService {
 
       // In case list is not empty
       if (list.isNotEmpty) {
-        // Return true because there is an existing
-        // user using the email address
+        // Return true because there is an existing user using the email address
         return true;
       } else {
         // Return false because email adress is not in use

@@ -45,5 +45,7 @@
 	<false/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We need to access your photo library to let you pick a photo from the photo library</string>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 </dict>
 </plist>
