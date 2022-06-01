@@ -2,13 +2,14 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:gather/business_logic/managers/all_managers.dart';
+import 'package:gather/business_logic/services/auth_service.dart';
 import 'package:gather/ui/styles/all_styles.dart';
 import 'package:gather/ui/widgets/components/sign_up/auth_form_field.dart';
 import 'package:gather/ui/widgets/shared/all_shared_widgets.dart';
 import 'package:provider/provider.dart';
 
-import '../../constants/router_path.dart';
-import '../widgets/components/progress_bar_indicator.dart';
+import '../../../constants/router_path.dart';
+import '../../widgets/components/progress_bar_indicator.dart';
 
 class SignUpAccountScreen extends StatefulWidget {
   const SignUpAccountScreen({Key? key}) : super(key: key);
@@ -27,9 +28,9 @@ class SignUpAccountScreen extends StatefulWidget {
 
 class _SignUpAccountScreenState extends State<SignUpAccountScreen> {
   final TextEditingController _passwordEditingController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController _usernameEditingController =
-      TextEditingController();
+  TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -50,10 +51,38 @@ class _SignUpAccountScreenState extends State<SignUpAccountScreen> {
                     buildForm(),
                     PrimaryButton.large(
                       textLabel: 'Continue to Profile',
-                      onPressed: () {
+                      onPressed: () async {
                         log('Continue to profile button pressed');
                         if (_formKey.currentState!.validate()) {
-                          // TODO: Register new account
+                          try {
+                            final email =
+                                Provider
+                                    .of<ProfileManager>(context, listen: false)
+                                    .email;
+                            await AuthService.createAccountWithEmail(
+                                email, _passwordEditingController.text);
+                          } catch (e) {
+                            showDialog(
+                                context: context,
+                                builder: (_) =>
+                                    AlertDialog(
+                                      title: const Text('Error'),
+                                      content: Text(e.toString()),
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.of(
+                                                  context, rootNavigator: true)
+                                                  .pop('dialog');
+                                            },
+                                            child: const Text('OK'))
+                                      ],
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                          BorderRadius.circular(12)),
+                                    ));
+                          }
+                          // TODO: Save username to firestore
                           // TODO: Save email to ProfileManager
                           // TODO: Save username to ProfileManager
                           // TODO: go to profile sign up page
@@ -64,7 +93,10 @@ class _SignUpAccountScreenState extends State<SignUpAccountScreen> {
                 ),
               ),
             ),
-            if (MediaQuery.of(context).viewInsets.bottom < 40)
+            if (MediaQuery
+                .of(context)
+                .viewInsets
+                .bottom < 40)
               Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 32,
@@ -143,7 +175,9 @@ class _SignUpAccountScreenState extends State<SignUpAccountScreen> {
             borderRadius: BorderRadius.circular(8),
           ),
           child: Text(
-            Provider.of<ProfileManager>(context, listen: false).email,
+            Provider
+                .of<ProfileManager>(context, listen: false)
+                .email,
             style: GatherTextStyle.body1(context),
           ),
         ),

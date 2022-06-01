@@ -4,10 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gather/business_logic/models/failure.dart';
 // TODO: Import google sign in
 
-class AuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  /// Returns true if email address is already exist.  
+abstract class AuthService {
+  
+  /// Returns true if email address is already exist.
   /// This function don't handle errors, you must handle it by yourself
   static Future<bool> checkEmail(String emailAddress) async {
     try {
@@ -28,6 +27,24 @@ class AuthService {
           'Can\'t connect to internet 😥. Please check your internet and try again');
     } on FirebaseAuthException catch (e) {
       throw Failure(e.message ?? 'Unknown error');
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<void> createAccountWithEmail(
+      String email, String password) async {
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        throw Failure('Password must at least 8 characters');
+      } else if (e.code == 'email-already-in-use') {
+        throw Failure('Account for $email already exist');
+      }
     } catch (e) {
       rethrow;
     }

@@ -32,8 +32,8 @@ class AppRouter extends RouterDelegate
   /// Configure navigator, list of pages, and pages that is displayed
   @override
   Widget build(BuildContext context) {
-    var appState = Provider.of<AppStateManager>(context, listen: false);
-    var signUpState = Provider.of<SignUpManager>(context, listen: false);
+    // var appState = Provider.of<AppStateManager>(context, listen: false);
+    // var signUpState = Provider.of<SignUpManager>(context, listen: false);
     return Navigator(
       key: navigatorKey,
       onPopPage: _handlePopPage,
@@ -43,19 +43,21 @@ class AppRouter extends RouterDelegate
         // if (!appState.isOnBoardingComplete) OnBoardingScreen.page(),
         OnBoardingScreen.page(), // TODO: Delete
         // // Sign up
-        if (appState.isOnBoardingComplete &&
-            !appState.isLoggedIn &&
-            signUpState.isSigningUp &&
-            signUpState.getCurrentIndex >= 0)
+        if (appStateManager.isOnBoardingComplete &&
+            !appStateManager.isLoggedIn &&
+            signUpManager.isSigningUp &&
+            signUpManager.getCurrentIndex >= 0)
           SignUpScreen.page(),
-        if (!appState.isLoggedIn &&
-            signUpState.isSigningUp &&
-            signUpState.getCurrentIndex >= 1)
+        if (!appStateManager.isLoggedIn &&
+            signUpManager.isSigningUp &&
+            signUpManager.getCurrentIndex >= 1)
           SignUpAccountScreen.page(),
         if (!appStateManager.isLoggedIn &&
             signUpManager.isSigningUp &&
             signUpManager.getCurrentIndex >= 2)
           SignUpProfileScreen.page(),
+        
+        
         // Sign in
         // if (appState.isOnBoardingComplete &&
         //     !appState.isLoggedIn &&
