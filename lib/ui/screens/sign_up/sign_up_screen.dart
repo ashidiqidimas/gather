@@ -158,7 +158,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                             Provider.of<SignUpManager>(context, listen: false)
                                 .nextSignUpScreen();
                             Provider.of<ProfileManager>(context, listen: false)
-                                .changeEmail(_emailEditingController.text);
+                                .updateEmail(_emailEditingController.text);
                             debugPrint('Email not exist');
                           }
                         } catch (e) {

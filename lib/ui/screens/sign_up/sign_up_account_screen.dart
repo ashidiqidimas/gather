@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:gather/business_logic/managers/all_managers.dart';
 import 'package:gather/business_logic/services/auth_service.dart';
+import 'package:gather/business_logic/services/db_service.dart';
 import 'package:gather/ui/styles/all_styles.dart';
 import 'package:gather/ui/widgets/components/sign_up/auth_form_field.dart';
 import 'package:gather/ui/widgets/shared/all_shared_widgets.dart';
@@ -61,6 +62,11 @@ class _SignUpAccountScreenState extends State<SignUpAccountScreen> {
                                     .email;
                             await AuthService.createAccountWithEmail(
                                 email, _passwordEditingController.text);
+
+                            final username = _usernameEditingController.text;
+                            await DBService.setUsername(username);
+
+                            // TODO: go to profile sign up page
                           } catch (e) {
                             showDialog(
                                 context: context,
@@ -82,10 +88,6 @@ class _SignUpAccountScreenState extends State<SignUpAccountScreen> {
                                           BorderRadius.circular(12)),
                                     ));
                           }
-                          // TODO: Save username to firestore
-                          // TODO: Save email to ProfileManager
-                          // TODO: Save username to ProfileManager
-                          // TODO: go to profile sign up page
                         }
                       },
                     ),

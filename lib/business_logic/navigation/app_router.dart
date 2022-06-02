@@ -40,7 +40,7 @@ class AppRouter extends RouterDelegate
       pages: [
         // BuildScreen.page(),
         // On boarding
-        // if (!appState.isOnBoardingComplete) OnBoardingScreen.page(),
+        if (!appStateManager.isOnBoardingComplete) OnBoardingScreen.page(),
         OnBoardingScreen.page(), // TODO: Delete
         // // Sign up
         if (appStateManager.isOnBoardingComplete &&

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gather/business_logic/services/db_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../services/auth_service.dart';
@@ -7,8 +8,11 @@ import '../../constants/all_constants.dart';
 
 class ProfileManager extends ChangeNotifier {
   late String _email;
+  late String _username;
 
   String get email => _email;
+
+  String get username => _username;
 
   // TODO: Create a constructor that will initialize the properties from shared preferences
 
@@ -18,7 +22,7 @@ class ProfileManager extends ChangeNotifier {
     try {
       final isEmailExist = await AuthService.checkEmail(emailAddress);
       if (isEmailExist) {
-        changeEmail(emailAddress);
+        updateEmail(emailAddress);
       }
       return isEmailExist;
     } catch (e) {
@@ -26,15 +30,42 @@ class ProfileManager extends ChangeNotifier {
     }
   }
 
+  Future<void> changeUsername(String username) async {
+    try {
+      await DBService.setUsername(username);
+      _updateUsername(username);
+    } catch (e) {
+      rethrow;
+    }
+  }
 
-  void changeEmail(String newEmail) async {
+  void _updateUsername(String username) async {
+    _username = username;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(keyUsername, username);
+    notifyListeners();
+  }
+
+
+  void updateEmail(String newEmail) async {
     _email = newEmail;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(keyEmail, newEmail);
     notifyListeners();
   }
 
-  void fetchEmail() async {
+  /// Fetch username from SharedPreferences then notify its listener
+  void _fetchUsername() async {
+    final prefs = await SharedPreferences.getInstance();
+    final username = prefs.getString(keyUsername);
+    if (username != null) {
+      _username = username;
+      notifyListeners();
+    }
+  }
+
+  /// Fetch email from SharedPreferences then notify its listener
+  void _fetchEmail() async {
     final prefs = await SharedPreferences.getInstance();
     if (prefs.containsKey(keyEmail)) {
       final email = prefs.getString(keyEmail)!;
@@ -45,7 +76,6 @@ class ProfileManager extends ChangeNotifier {
 
 // TODO: Create method to change [User] properties:
 // final String userID;
-// final String username;
 // final String firstName;
 // final String lastName;
 // final String photoURL;

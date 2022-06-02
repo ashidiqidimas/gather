@@ -5,7 +5,14 @@ import 'package:gather/business_logic/models/failure.dart';
 // TODO: Import google sign in
 
 abstract class AuthService {
-  
+  static String getUserID() {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Failure('User haven\'t login');
+    }
+    return userID;
+  }
+
   /// Returns true if email address is already exist.
   /// This function don't handle errors, you must handle it by yourself
   static Future<bool> checkEmail(String emailAddress) async {
