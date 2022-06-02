@@ -29,9 +29,9 @@ class SignUpAccountScreen extends StatefulWidget {
 
 class _SignUpAccountScreenState extends State<SignUpAccountScreen> {
   final TextEditingController _passwordEditingController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController _usernameEditingController =
-  TextEditingController();
+      TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -56,37 +56,38 @@ class _SignUpAccountScreenState extends State<SignUpAccountScreen> {
                         log('Continue to profile button pressed');
                         if (_formKey.currentState!.validate()) {
                           try {
-                            final email =
-                                Provider
-                                    .of<ProfileManager>(context, listen: false)
-                                    .email;
+                            final username = _usernameEditingController.text;
+                            await ProfileManager.checkUsername(username);
+
+                            final email = Provider.of<ProfileManager>(context,
+                                    listen: false)
+                                .email;
                             await AuthService.createAccountWithEmail(
                                 email, _passwordEditingController.text);
 
-                            final username = _usernameEditingController.text;
                             await DBService.setUsername(username);
 
-                            // TODO: go to profile sign up page
+                            Provider.of<SignUpManager>(context).nextSignUpScreen();
                           } catch (e) {
                             showDialog(
-                                context: context,
-                                builder: (_) =>
-                                    AlertDialog(
-                                      title: const Text('Error'),
-                                      content: Text(e.toString()),
-                                      actions: [
-                                        TextButton(
-                                            onPressed: () {
-                                              Navigator.of(
-                                                  context, rootNavigator: true)
-                                                  .pop('dialog');
-                                            },
-                                            child: const Text('OK'))
-                                      ],
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                          BorderRadius.circular(12)),
-                                    ));
+                              context: context,
+                              builder: (_) => AlertDialog(
+                                title: const Text('Error'),
+                                content: Text(e.toString()),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context,
+                                                rootNavigator: true)
+                                            .pop('dialog');
+                                      },
+                                      child: const Text('OK'))
+                                ],
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
+                            );
                           }
                         }
                       },
@@ -95,10 +96,7 @@ class _SignUpAccountScreenState extends State<SignUpAccountScreen> {
                 ),
               ),
             ),
-            if (MediaQuery
-                .of(context)
-                .viewInsets
-                .bottom < 40)
+            if (MediaQuery.of(context).viewInsets.bottom < 40)
               Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 32,
@@ -177,9 +175,7 @@ class _SignUpAccountScreenState extends State<SignUpAccountScreen> {
             borderRadius: BorderRadius.circular(8),
           ),
           child: Text(
-            Provider
-                .of<ProfileManager>(context, listen: false)
-                .email,
+            Provider.of<ProfileManager>(context, listen: false).email,
             style: GatherTextStyle.body1(context),
           ),
         ),

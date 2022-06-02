@@ -18,7 +18,7 @@ class SignUpAppbar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentIndex = Provider.of<SignUpManager>(context, listen: false).getCurrentIndex - 1;
+    final currentIndex = Provider.of<SignUpManager>(context, listen: false).currentIndex - 1;
     final currentTitle = titles[currentIndex];
     // final currentTitle = titles[1]; // TODO: Delete this line and uncomment the line above
     return AppBar(
