@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gather/business_logic/models/failure.dart';
 import 'package:gather/business_logic/services/db_service.dart';
+import 'package:gather/business_logic/services/storage_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -43,7 +44,9 @@ class ProfileManager extends ChangeNotifier {
       if (croppedPath == null) return null;
       debugPrint('Success cropped image with path: $croppedPath');
 
-      // TODO: Upload to DB, it also must update photoURL property inside
+      // TODO: Upload to Cloud Storage, it also must update photoURL property inside
+      if (userID == null) throw Failure('User haven\'t log in');
+      StorageService.setProfilePicture(imagePath: croppedPath, userID: userID!);
       // TODO: Save disk
 
       notifyListeners();
