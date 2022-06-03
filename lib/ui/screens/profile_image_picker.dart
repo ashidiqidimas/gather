@@ -30,7 +30,7 @@ class _ProfileImagePickerState extends State<ProfileImagePicker> {
         Center(
           child: GestureDetector(
             onTap: () async {
-              XFile image = await imagePicker.pickImage(
+              XFile image = await imagePicker.changeProfilePicture(
                   source: ImageSource.gallery,
                   imageQuality: 50,
                   preferredCameraDevice: CameraDevice.front);

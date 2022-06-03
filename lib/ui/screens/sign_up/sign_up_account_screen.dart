@@ -67,7 +67,7 @@ class _SignUpAccountScreenState extends State<SignUpAccountScreen> {
 
                             await DBService.setUsername(username);
 
-                            Provider.of<SignUpManager>(context).nextSignUpScreen();
+                            Provider.of<SignUpManager>(context, listen: false).nextSignUpScreen();
                           } catch (e) {
                             showDialog(
                               context: context,

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gather/business_logic/models/failure.dart';
 import 'package:gather/business_logic/services/db_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 import '../services/auth_service.dart';
 import '../../constants/all_constants.dart';
@@ -14,6 +16,8 @@ class ProfileManager extends ChangeNotifier {
 
   String get username => _username;
 
+  String? get userID => AuthService.getUserID();
+
   // TODO: Create a constructor that will initialize the properties from shared preferences
 
   /// Returns true if email address is already exist.
@@ -25,6 +29,80 @@ class ProfileManager extends ChangeNotifier {
         updateEmail(emailAddress);
       }
       return isEmailExist;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  /// Returns Future String to the path of the image
+  Future<String?> changeProfilePicture() async {
+    try {
+      final originalPath = await _pickImage();
+
+      final croppedPath = await _cropImage(originalPath: originalPath);
+      if (croppedPath == null) return null;
+      debugPrint('Success cropped image with path: $croppedPath');
+
+      // TODO: Upload to DB, it also must update photoURL property inside
+      // TODO: Save disk
+
+      notifyListeners();
+      return croppedPath;
+      // TODO: Return path
+      // TODO: Image.file(File(path)) in UI
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  /// Returns a path to the original image.
+  /// This function can throw error when it failed to pick an image
+  Future<String> _pickImage() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) throw Failure('Unknown error while tried to image');
+
+      return image.path;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  /// Returns a path to the cropped image
+  Future<String?> _cropImage({required String originalPath}) async {
+    try {
+      final croppedPath = await ImageCropper().cropImage(
+        sourcePath: originalPath,
+        aspectRatioPresets: [
+          CropAspectRatioPreset.square,
+        ],
+        cropStyle: CropStyle.circle,
+        maxHeight: 400,
+        maxWidth: 400,
+        compressFormat: ImageCompressFormat.png,
+        compressQuality: 30,
+        uiSettings: [
+          AndroidUiSettings(
+              toolbarTitle: 'Crop Profile Picture',
+              // toolbarColor: Colors.deepOrange,
+              // toolbarWidgetColor: Colors.white,
+              initAspectRatio: CropAspectRatioPreset.square,
+              lockAspectRatio: false),
+          IOSUiSettings(
+            title: 'Crop Profile Picture',
+            minimumAspectRatio: 1 / 1,
+            aspectRatioLockEnabled: true,
+            resetButtonHidden: true,
+            aspectRatioPickerButtonHidden: true,
+          ),
+        ],
+      );
+
+      if (croppedPath != null) {
+        return croppedPath.path;
+      } else {
+        return null;
+      }
     } catch (e) {
       rethrow;
     }

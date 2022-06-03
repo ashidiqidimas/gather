@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gather/business_logic/models/failure.dart';
+import 'package:path/path.dart';
 
 import 'auth_service.dart';
 

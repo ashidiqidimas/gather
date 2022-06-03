@@ -1,10 +1,13 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:gather/business_logic/managers/all_managers.dart';
 import 'package:gather/ui/screens/profile_image_picker.dart';
 import 'package:gather/ui/widgets/components/sign_up/auth_form_field.dart';
 import 'package:gather/ui/widgets/shared/all_shared_widgets.dart';
 import 'package:gather/ui/widgets/shared/buttons/tertiary_button.dart';
+import 'package:provider/provider.dart';
 
 import '../../../constants/router_path.dart';
 import '../../widgets/components/progress_bar_indicator.dart';
@@ -14,8 +17,8 @@ class SignUpProfileScreen extends StatefulWidget {
 
   static MaterialPage page() {
     return MaterialPage(
-      name: RouterPath.signUpAccount,
-      key: ValueKey(RouterPath.signUpAccount),
+      name: RouterPath.signUpProfile,
+      key: ValueKey(RouterPath.signUpProfile),
       child: const SignUpProfileScreen(),
     );
   }
@@ -28,10 +31,12 @@ class _SignUpProfileScreenState extends State<SignUpProfileScreen> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _firstNameEditingController =
-      TextEditingController();
+  TextEditingController();
 
   final TextEditingController _lastNameEditingController =
-      TextEditingController();
+  TextEditingController();
+
+  File? _profileImage;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +59,6 @@ class _SignUpProfileScreenState extends State<SignUpProfileScreen> {
                       onPressed: () {
                         log('Continue to About button pressed');
                         if (_formKey.currentState!.validate()) {
-
                           // TODO: Go to about sign up page
                         }
                       },
@@ -63,7 +67,10 @@ class _SignUpProfileScreenState extends State<SignUpProfileScreen> {
                 ),
               ),
             ),
-            if (MediaQuery.of(context).viewInsets.bottom < 40)
+            if (MediaQuery
+                .of(context)
+                .viewInsets
+                .bottom < 40)
               Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 32,
@@ -115,17 +122,27 @@ class _SignUpProfileScreenState extends State<SignUpProfileScreen> {
           const SizedBox(
             height: 16,
           ),
-          Image.asset(
-            'assets/shared/images/default-profile-picture.png',
+          _profileImage == null
+              ? Image.asset('assets/shared/images/default-profile-picture.png')
+              : ClipRRect(
+            borderRadius: BorderRadius.circular(100),
+            child: Image.file(
+              _profileImage!,
+              height: 100,
+              width: 100,
+            ),
           ),
           const SizedBox(
             height: 10,
           ),
           TertiaryButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ProfileImagePicker()));
-              log('Change Photo button pressed');
+            onPressed: () async {
+              final newProfilePath =
+              await Provider.of<ProfileManager>(context, listen: false)
+                  .changeProfilePicture();
+              if (newProfilePath != null) {
+                setState(() => _profileImage = File(newProfilePath));
+              }
             },
             labelText: 'Change Photo',
           ),

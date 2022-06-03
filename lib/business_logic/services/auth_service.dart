@@ -5,11 +5,8 @@ import 'package:gather/business_logic/models/failure.dart';
 // TODO: Import google sign in
 
 abstract class AuthService {
-  static String getUserID() {
+  static String? getUserID() {
     final userID = FirebaseAuth.instance.currentUser?.uid;
-    if (userID == null) {
-      throw Failure('User haven\'t login');
-    }
     return userID;
   }
 
