@@ -17,6 +17,9 @@ class SignUpManager extends ChangeNotifier {
   }
 
   void nextSignUpScreen() {
+    if (currentIndex == 3) {
+      _signUpComplete();
+    }
     _currentIndex++;
     notifyListeners();
   }
@@ -29,6 +32,11 @@ class SignUpManager extends ChangeNotifier {
   void showSignIn() {
     _isSigningUp = false;
     // Provider.of(context)
+    notifyListeners();
+  }
+
+  void _signUpComplete() {
+    _isSigningUp = false;
     notifyListeners();
   }
 }

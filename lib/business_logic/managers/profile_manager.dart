@@ -1,10 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:gather/business_logic/models/failure.dart';
 import 'package:gather/business_logic/services/db_service.dart';
 import 'package:gather/business_logic/services/storage_service.dart';
+import 'package:gather/business_logic/utils/util_functions.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:path/path.dart';
 
 import '../services/auth_service.dart';
 import '../../constants/all_constants.dart';
@@ -12,6 +17,7 @@ import '../../constants/all_constants.dart';
 class ProfileManager extends ChangeNotifier {
   late String _email;
   late String _username;
+  late String _profilePicturePath;
 
   String get email => _email;
 
@@ -44,18 +50,32 @@ class ProfileManager extends ChangeNotifier {
       if (croppedPath == null) return null;
       debugPrint('Success cropped image with path: $croppedPath');
 
-      // TODO: Upload to Cloud Storage, it also must update photoURL property inside
-      if (userID == null) throw Failure('User haven\'t log in');
-      StorageService.setProfilePicture(imagePath: croppedPath, userID: userID!);
-      // TODO: Save disk
+      final directory = await getApplicationDocumentsDirectory();
+      final directoryPath = directory.path;
+      final profileImageFile =
+          await changeFileNameOnly(File(croppedPath), 'profile-picture');
 
-      notifyListeners();
-      return croppedPath;
-      // TODO: Return path
-      // TODO: Image.file(File(path)) in UI
+      final fileName = basename(profileImageFile.path);
+      final File localImage =
+          await profileImageFile.copy('$directoryPath/$fileName');
+
+      if (userID == null) throw Failure('User haven\'t log in');
+      StorageService.setProfilePicture(
+          imagePath: localImage.path, userID: userID!);
+
+      _changeProfilePicture(localImage.path);
+      return localImage.path;
+
     } catch (e) {
       rethrow;
     }
+  }
+
+  void _changeProfilePicture(String imagePath) async {
+    _profilePicturePath = imagePath;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(keyProfilePicturePath, imagePath);
+    notifyListeners();
   }
 
   /// Returns a path to the original image.
@@ -164,6 +184,18 @@ class ProfileManager extends ChangeNotifier {
       _email = email;
       notifyListeners();
     }
+  }
+
+  void _fetchChangeProfilePicture() async {
+    final prefs = await SharedPreferences.getInstance();
+    final profilePicturePath = prefs.getString(keyProfilePicturePath);
+    if (profilePicturePath != null) {
+      _profilePicturePath = profilePicturePath;
+    } else {
+      // TODO: fetch from Cloud Storage
+    }
+
+    notifyListeners();
   }
 
 // TODO: Create method to change [User] properties:

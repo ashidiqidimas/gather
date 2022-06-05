@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:gather/business_logic/managers/all_managers.dart';
-import 'package:gather/ui/screens/profile_image_picker.dart';
 import 'package:gather/ui/widgets/components/sign_up/auth_form_field.dart';
 import 'package:gather/ui/widgets/shared/all_shared_widgets.dart';
 import 'package:gather/ui/widgets/shared/buttons/tertiary_button.dart';
@@ -31,12 +30,19 @@ class _SignUpProfileScreenState extends State<SignUpProfileScreen> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _firstNameEditingController =
-  TextEditingController();
+      TextEditingController();
 
   final TextEditingController _lastNameEditingController =
-  TextEditingController();
+      TextEditingController();
 
   File? _profileImage;
+
+  @override
+  void dispose() {
+    _firstNameEditingController;
+    _lastNameEditingController;
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +63,11 @@ class _SignUpProfileScreenState extends State<SignUpProfileScreen> {
                     PrimaryButton.large(
                       textLabel: 'Continue to About',
                       onPressed: () {
+                        // TODO: Upload name to DB
                         log('Continue to About button pressed');
                         if (_formKey.currentState!.validate()) {
-                          // TODO: Go to about sign up page
+                          Provider.of<SignUpManager>(context, listen: false)
+                              .nextSignUpScreen();
                         }
                       },
                     ),
@@ -67,10 +75,7 @@ class _SignUpProfileScreenState extends State<SignUpProfileScreen> {
                 ),
               ),
             ),
-            if (MediaQuery
-                .of(context)
-                .viewInsets
-                .bottom < 40)
+            if (MediaQuery.of(context).viewInsets.bottom < 40)
               Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 32,
@@ -106,6 +111,7 @@ class _SignUpProfileScreenState extends State<SignUpProfileScreen> {
             title: 'Last Name',
             textEditingController: _lastNameEditingController,
             hintText: 'Amalia',
+            isLastForm: true,
           ),
           const SizedBox(
             height: 16,
@@ -125,21 +131,21 @@ class _SignUpProfileScreenState extends State<SignUpProfileScreen> {
           _profileImage == null
               ? Image.asset('assets/shared/images/default-profile-picture.png')
               : ClipRRect(
-            borderRadius: BorderRadius.circular(100),
-            child: Image.file(
-              _profileImage!,
-              height: 100,
-              width: 100,
-            ),
-          ),
+                  borderRadius: BorderRadius.circular(100),
+                  child: Image.file(
+                    _profileImage!,
+                    height: 100,
+                    width: 100,
+                  ),
+                ),
           const SizedBox(
             height: 10,
           ),
           TertiaryButton(
             onPressed: () async {
               final newProfilePath =
-              await Provider.of<ProfileManager>(context, listen: false)
-                  .changeProfilePicture();
+                  await Provider.of<ProfileManager>(context, listen: false)
+                      .changeProfilePicture();
               if (newProfilePath != null) {
                 setState(() => _profileImage = File(newProfilePath));
               }

@@ -58,6 +58,10 @@ class AppRouter extends RouterDelegate
             signUpManager.isSigningUp &&
             signUpManager.currentIndex >= 2)
           SignUpProfileScreen.page(),
+        if (!appStateManager.isLoggedIn &&
+            signUpManager.isSigningUp &&
+            signUpManager.currentIndex >= 3)
+          SignUpAboutScreen.page(),
 
         // Sign in
         // if (appState.isOnBoardingComplete &&

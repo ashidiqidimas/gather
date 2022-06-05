@@ -15,6 +15,9 @@ class AuthFormField extends StatefulWidget {
         hintText = 'example@mail.com',
         textInputType = TextInputType.emailAddress,
         validator = null,
+        maxLines = null,
+        onTap = null,
+        readOnly = false,
         super(key: key) {
     _validator = (_) {
       final value = textEditingController.text;
@@ -29,17 +32,20 @@ class AuthFormField extends StatefulWidget {
     };
   }
 
-  AuthFormField(
-      {Key? key,
-      required this.title,
-      required this.textEditingController,
-      required this.hintText,
-      this.isLastForm = false,
-      this.textInputType,
-      this.validator,
-      this.infoText,
-      this.autofillHints})
-      : super(key: key) {
+  AuthFormField({
+    Key? key,
+    required this.title,
+    required this.textEditingController,
+    required this.hintText,
+    this.isLastForm = false,
+    this.textInputType,
+    this.validator,
+    this.infoText,
+    this.autofillHints,
+    this.onTap,
+    this.maxLines,
+    this.readOnly = false,
+  }) : super(key: key) {
     _validator = (_) {
       final value = textEditingController.text;
       if (value.isEmpty) {
@@ -60,6 +66,9 @@ class AuthFormField extends StatefulWidget {
   final String? infoText;
   final String? Function(String value)? validator;
   final Iterable<String>? autofillHints;
+  final Function()? onTap;
+  final int? maxLines;
+  final bool readOnly;
 
   late final String? Function(String? value) _validator;
 
@@ -90,6 +99,9 @@ class _AuthFormFieldState extends State<AuthFormField> {
           height: 4,
         ),
         TextField(
+          readOnly: widget.readOnly,
+          maxLines: widget.maxLines,
+          onTap: widget.onTap,
           keyboardType: widget.textInputType,
           textInputAction:
               widget.isLastForm ? TextInputAction.done : TextInputAction.next,

@@ -139,6 +139,7 @@ class _SignUpAccountScreenState extends State<SignUpAccountScreen> {
             infoText: 'Minimum 8 characters and contains alphabets'
                 ', numbers, special characters.',
             textInputType: TextInputType.visiblePassword,
+            isLastForm: true,
             // autofillHints: const [AutofillHints.newPassword],
             // isLastForm: false,
             // TODO: Create password validator regex
