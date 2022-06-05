@@ -8,14 +8,18 @@ class SignUpManager extends ChangeNotifier {
   int _currentIndex = 0;
 
   bool get isSigningUp => _isSigningUp;
-  int get getCurrentIndex => _currentIndex;
-  
+
+  int get currentIndex => _currentIndex;
+
   void hideSignUp() {
     _isSigningUp = false;
     notifyListeners();
   }
 
   void nextSignUpScreen() {
+    if (currentIndex == 3) {
+      _signUpComplete();
+    }
     _currentIndex++;
     notifyListeners();
   }
@@ -24,11 +28,15 @@ class SignUpManager extends ChangeNotifier {
     _currentIndex--;
     notifyListeners();
   }
-  
+
   void showSignIn() {
     _isSigningUp = false;
     // Provider.of(context)
     notifyListeners();
   }
 
+  void _signUpComplete() {
+    _isSigningUp = false;
+    notifyListeners();
+  }
 }

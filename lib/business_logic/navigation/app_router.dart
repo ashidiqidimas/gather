@@ -32,30 +32,37 @@ class AppRouter extends RouterDelegate
   /// Configure navigator, list of pages, and pages that is displayed
   @override
   Widget build(BuildContext context) {
-    var appState = Provider.of<AppStateManager>(context, listen: false);
-    var signUpState = Provider.of<SignUpManager>(context, listen: false);
+    // var appState = Provider.of<AppStateManager>(context, listen: false);
+    // var signUpState = Provider.of<SignUpManager>(context, listen: false);
     return Navigator(
       key: navigatorKey,
       onPopPage: _handlePopPage,
       pages: [
         // BuildScreen.page(),
+
         // On boarding
-        // if (!appState.isOnBoardingComplete) OnBoardingScreen.page(),
-        OnBoardingScreen.page(), // TODO: Delete
+        if (!appStateManager.isOnBoardingComplete) OnBoardingScreen.page(),
+        OnBoardingScreen.page(),
+
         // // Sign up
-        if (appState.isOnBoardingComplete &&
-            !appState.isLoggedIn &&
-            signUpState.isSigningUp &&
-            signUpState.getCurrentIndex >= 0)
+        if (appStateManager.isOnBoardingComplete &&
+            !appStateManager.isLoggedIn &&
+            signUpManager.isSigningUp &&
+            signUpManager.currentIndex >= 0)
           SignUpScreen.page(),
-        if (!appState.isLoggedIn &&
-            signUpState.isSigningUp &&
-            signUpState.getCurrentIndex >= 1)
+        if (!appStateManager.isLoggedIn &&
+            signUpManager.isSigningUp &&
+            signUpManager.currentIndex >= 1)
           SignUpAccountScreen.page(),
         if (!appStateManager.isLoggedIn &&
             signUpManager.isSigningUp &&
-            signUpManager.getCurrentIndex >= 2)
+            signUpManager.currentIndex >= 2)
           SignUpProfileScreen.page(),
+        if (!appStateManager.isLoggedIn &&
+            signUpManager.isSigningUp &&
+            signUpManager.currentIndex >= 3)
+          SignUpAboutScreen.page(),
+
         // Sign in
         // if (appState.isOnBoardingComplete &&
         //     !appState.isLoggedIn &&
@@ -69,7 +76,9 @@ class AppRouter extends RouterDelegate
   /// Handle back button when pressed.
   bool _handlePopPage(Route<dynamic> route, result) {
     if (route.settings.name!.contains('sign-up')) {
-      signUpManager.backSignUpScreen();
+      if (signUpManager.currentIndex > 0) {
+        signUpManager.backSignUpScreen();
+      }
     }
 
     final didPop = !route.didPop(result);
