@@ -43,7 +43,7 @@ class AuthFormField extends StatefulWidget {
     this.infoText,
     this.autofillHints,
     this.onTap,
-    this.maxLines,
+    this.maxLines = 1,
     this.readOnly = false,
   }) : super(key: key) {
     _validator = (_) {
