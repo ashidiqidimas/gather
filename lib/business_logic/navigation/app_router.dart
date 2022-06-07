@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gather/ui/screens/build.dart';
-import 'package:provider/provider.dart';
+import 'package:gather/ui/screens/home_screen.dart';
 
 import '../managers/all_managers.dart';
 import '../../../ui/screens/all_screens.dart';
 
-/// Configure which page to display.<br>
+/// Configure which page to display.
 ///
 /// This class listen to [AppStateManager] and holds list of pages to display,
 /// then change which page to display according to app state.
@@ -41,7 +40,7 @@ class AppRouter extends RouterDelegate
         // BuildScreen.page(),
 
         // On boarding
-        if (!appStateManager.isOnBoardingComplete) OnBoardingScreen.page(),
+        if (!appStateManager.isOnBoardingComplete && !appStateManager.isLoggedIn) OnBoardingScreen.page(),
         OnBoardingScreen.page(),
 
         // // Sign up
@@ -63,12 +62,18 @@ class AppRouter extends RouterDelegate
             signUpManager.currentIndex >= 3)
           SignUpAboutScreen.page(),
 
+        if (appStateManager.isLoggedIn && !appStateManager.isEmailVerificationComplete)
+          EmailVerificationScreen.page(),
+
         // Sign in
         // if (appState.isOnBoardingComplete &&
         //     !appState.isLoggedIn &&
         //     signInManager.isSigningIn)
         //   SignInScreen.page(),
+
         // TODO: Add home screen
+        if (appStateManager.isLoggedIn && appStateManager.isEmailVerificationComplete)
+          HomeScreen.page(0),
       ],
     );
   }

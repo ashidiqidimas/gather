@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gather/business_logic/managers/all_managers.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../../../constants/all_constants.dart';
 import '../../widgets/components/progress_bar_indicator.dart';
@@ -83,7 +85,7 @@ class _SignUpAboutScreenState extends State<SignUpAboutScreen> {
         if (_formKey.currentState!.validate()) {
           // TODO: Upload data to DB
 
-          // TODO: Go to email confirmation screen
+          Provider.of<AppStateManager>(context, listen: false).completeSignUp();
         }
       },
     );
@@ -110,7 +112,7 @@ class _SignUpAboutScreenState extends State<SignUpAboutScreen> {
                   lastDate: DateTime.now());
 
               if (birthday != null) {
-                final formattedDate = DateFormat('dd-mm-yyyy').format(birthday);
+                final formattedDate = DateFormat('d MMMM y').format(birthday);
                 setState(() {
                   _birthdayEditingController.text = formattedDate;
                 });

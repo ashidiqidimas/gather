@@ -14,6 +14,9 @@ class GatherAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: Colors.white,
+      leading: null,
+      automaticallyImplyLeading: false,
       centerTitle: false,
       titleSpacing: 0,
       title: Row(

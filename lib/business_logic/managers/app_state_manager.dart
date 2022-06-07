@@ -1,19 +1,22 @@
 import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/all_constants.dart';
-
+import '../services/auth_service.dart';
 
 class AppStateManager extends ChangeNotifier {
   AppStateManager() {
     fetchOnBoardingSharedPreferences();
     _fetchAuthState();
+    listenAuthState();
   }
 
-  late bool _isOnBoardingComplete = false;
-  late bool _isLoggedIn = false;
+  bool _isOnBoardingComplete = false;
+  bool _isLoggedIn = false;
+  bool _isEmailVerificationComplete = false;
   int _selectedTab = GatherTab.timeline;
 
   /// Returns the home screen's tab index that is currently in.
@@ -23,8 +26,21 @@ class AppStateManager extends ChangeNotifier {
   /// In this case, user is for all user in this phone, not a particular user.
   bool get isOnBoardingComplete => _isOnBoardingComplete;
 
-  /// Returns whether user has logged in.
+  /// Returns whether a user has logged in.
   bool get isLoggedIn => _isLoggedIn;
+
+  /// Returns whether a user has verify their email.
+  bool get isEmailVerificationComplete => _isEmailVerificationComplete;
+
+  // TODO: Delete
+  void testSignOut() {
+    AuthService.signOut();
+    if (FirebaseAuth.instance.currentUser == null) {
+      debugPrint('Sign out success');
+    } else {
+      debugPrint('Sign out success');
+    }
+  }
 
   /// Fetch from the device whether user has complete on boarding
   Future<void> fetchOnBoardingSharedPreferences() async {
@@ -47,8 +63,39 @@ class AppStateManager extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(keyIsOnBoardingComplete, true);
     _isOnBoardingComplete = true;
+    await sendVerificationEmail();
 
     notifyListeners();
+  }
+
+  Future<void> sendVerificationEmail() async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      await user?.sendEmailVerification();
+      debugPrint("Sent email to ${user?.email}");
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> listenAuthState() async {
+    await FirebaseAuth.instance.currentUser?.reload();
+    AuthService.listenToUserChanges((user) {
+      if (user != null) {
+        _signedIn();
+        if (user.emailVerified) {
+          _verifyEmail();
+          debugPrint('User with email ${user.email}, ${user.emailVerified}');
+        }
+      } else {
+        signOut();
+      }
+      debugPrint('User has verify: ${user?.emailVerified}');
+    });
+  }
+
+  void completeSignUp() {
+    _signedIn();
   }
 
   void _fetchAuthState() async {
@@ -56,10 +103,7 @@ class AppStateManager extends ChangeNotifier {
     _isLoggedIn = false;
   }
 
-  /// Log in a user with email and password.<br>
-  /// This will interact with Firebase Auth
-  void logIn(String email, String password) {
-    // TODO: setup login state with firebase auth
+  void _signedIn() {
     _isLoggedIn = true;
 
     notifyListeners();
@@ -70,13 +114,18 @@ class AppStateManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  void logOut() async {
+  void _verifyEmail() {
+    _isEmailVerificationComplete = true;
+    notifyListeners();
+  }
+
+  void signOut() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(keyIsOnBoardingComplete, false);
+    _isLoggedIn = false;
     _isOnBoardingComplete = false;
     _selectedTab = GatherTab.timeline;
-
-    // TODO: Call firebase auth to log out
+    AuthService.signOut();
 
     notifyListeners();
   }

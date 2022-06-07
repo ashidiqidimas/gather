@@ -41,7 +41,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Consumer<AppStateManager>(
       builder: (context, appStateManager, child) {
         return Scaffold(
-          appBar: const GatherAppBar(),
           body: IndexedStack(
             index: Provider.of<AppStateManager>(context).selectedTab,
             children: pages,

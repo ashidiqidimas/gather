@@ -145,9 +145,9 @@ class _SignUpScreenState extends State<SignUpScreen>
                         debugPrint('Email valid');
                         try {
                           bool isEmailAlreadyExist =
-                          await Provider.of<ProfileManager>(context,
-                              listen: false)
-                              .checkEmail(_emailEditingController.text);
+                              await Provider.of<ProfileManager>(context,
+                                      listen: false)
+                                  .checkEmail(_emailEditingController.text);
                           debugPrint('check email: $isEmailAlreadyExist');
                           if (isEmailAlreadyExist) {
                             setState(() {
@@ -162,16 +162,21 @@ class _SignUpScreenState extends State<SignUpScreen>
                             debugPrint('Email not exist');
                           }
                         } catch (e) {
-                          showDialog(context: context, builder: (_) => AlertDialog(
-                            title: const Text('Error'),
-                            content: Text(e.toString()),
-                            actions: [
-                              TextButton(onPressed: () {}, child: const Text('OK'))
-                            ],
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                          ));
+                          showDialog(
+                              context: context,
+                              builder: (_) => AlertDialog(
+                                    title: const Text('Error'),
+                                    content: Text(e.toString()),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {},
+                                          child: const Text('OK'))
+                                    ],
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                  ));
                         }
-                        
                       } else {
                         debugPrint('Email not valid');
                       }
@@ -188,6 +193,45 @@ class _SignUpScreenState extends State<SignUpScreen>
               ],
             ),
           ),
+        ),
+      ),
+      bottomNavigationBar: buildLogInButton(context),
+    );
+  }
+
+  SizedBox buildLogInButton(BuildContext context) {
+    return SizedBox(
+      height: 66,
+      child: Center(
+        child: Column(
+          children: [
+            TextButton(
+              onPressed: () {
+                Provider.of<AppStateManager>(context, listen: false)
+                    .testSignOut();
+              },
+              child: RichText(
+                text: TextSpan(
+                  text: 'Already have an account?',
+                  style: GatherTextStyle.body1(context),
+                  children: [
+                    TextSpan(
+                      text: ' Log in',
+                      style: GatherTextStyle.headline(context).copyWith(
+                        color: GatherColor.primarySwatch[500],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              style: ButtonStyle(
+                overlayColor: MaterialStateProperty.all(Colors.transparent),
+              ),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+          ],
         ),
       ),
     );

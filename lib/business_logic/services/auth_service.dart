@@ -10,6 +10,24 @@ abstract class AuthService {
     return userID;
   }
 
+  /// Listen to user changes.
+  /// When user change, it will call the [onChange] parameter
+  static void listenToUserChanges(void Function(User? user) onChange) {
+    FirebaseAuth.instance
+        .userChanges()
+        .listen((User? user) {
+      onChange(user);
+    });
+  }
+
+  static void signOut() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   /// Returns true if email address is already exist.
   /// This function don't handle errors, you must handle it by yourself
   static Future<bool> checkEmail(String emailAddress) async {
